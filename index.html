@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reggie Taylor-Johnson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg-grad: linear-gradient(140deg,#0d0d1a 0%,#1a0d2e 30%,#0d1a2e 60%,#0a1a1a 100%);
+  --glass-win: rgba(248,248,252,0.96);
+  --text-dark: #1a1a2e;
+  --indigo: #6366f1;
+  --amber: #f59e0b;
+  --emerald: #10b981;
+  --pink: #ec4899;
+  --teal: #14b8a6;
+}
+
+html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:#0d0d1a}
+
+/* ── BOOT ─────────────────────────────────────────── */
+#boot{
+  position:fixed;inset:0;
+  background:linear-gradient(135deg,#0d0d1a,#1a0d2e,#0d1a2e);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  z-index:9999;transition:opacity .9s ease;
+}
+#boot.out{opacity:0;pointer-events:none}
+.boot-monogram{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:80px;font-weight:700;letter-spacing:-4px;
+  background:linear-gradient(135deg,#fff 0%,rgba(255,255,255,.4) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:breathe 2s ease-in-out infinite;
+}
+@keyframes breathe{0%,100%{opacity:1}50%{opacity:.5}}
+.boot-sub{font-size:13px;color:rgba(255,255,255,.3);letter-spacing:4px;text-transform:uppercase;margin:12px 0 36px}
+.boot-bar{width:240px;height:2px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+.boot-fill{height:100%;background:linear-gradient(90deg,#6366f1,#ec4899,#f59e0b);animation:fill 2s ease-in-out forwards}
+@keyframes fill{0%{width:0}100%{width:100%}}
+
+/* ── DESKTOP ──────────────────────────────────────── */
+#desktop{
+  position:fixed;inset:0;
+  background: url('bliss.jpg') center center / cover no-repeat;
+  opacity:0;transition:opacity .9s ease;
+  overflow:hidden;
+}
+#desktop.on{opacity:1}
+
+/* Ambient blobs (hidden — Bliss bg replaces them) */
+.blob{display:none;}
+
+/* Hint text */
+#hint{
+  position:absolute;bottom:100px;left:50%;transform:translateX(-50%);
+  font-size:12px;color:rgba(255,255,255,.3);letter-spacing:2px;text-transform:uppercase;
+  animation:fadehint 4s ease 3s forwards;pointer-events:none;
+}
+@keyframes fadehint{0%{opacity:1}100%{opacity:0}}
+
+/* ── MENUBAR ──────────────────────────────────────── */
+#menubar{
+  position:absolute;top:0;left:0;right:0;height:30px;
+  background:rgba(0,20,60,.52);backdrop-filter:blur(30px);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 18px;z-index:200;
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+.mb-name{font-size:12px;font-weight:700;color:rgba(255,255,255,.9);letter-spacing:.3px}
+.mb-links{display:flex;gap:18px}
+.mb-links a{
+  font-size:11px;color:rgba(255,255,255,.5);text-decoration:none;
+  transition:color .2s;font-weight:500;
+}
+.mb-links a:hover{color:#fff}
+#clock{font-size:12px;color:rgba(255,255,255,.6);font-weight:500}
+
+/* ── DESKTOP ICONS ────────────────────────────────── */
+#icons{
+  position:absolute;top:55px;right:16px;
+  display:grid;grid-template-columns:repeat(3,74px);
+  gap:8px;z-index:10;
+}
+.d-icon{
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  cursor:pointer;padding:8px 4px;border-radius:14px;
+  transition:background .2s;
+}
+.d-icon:hover{background:rgba(255,255,255,.09)}
+.d-icon:active .d-img{transform:scale(.92)}
+.d-img{
+  width:50px;height:50px;border-radius:13px;
+  display:flex;align-items:center;justify-content:center;font-size:24px;
+  box-shadow:0 8px 24px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.2);
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s;
+}
+.d-icon:hover .d-img{
+  transform:scale(1.12) translateY(-2px);
+  box-shadow:0 16px 36px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.25);
+}
+.d-lbl{
+  font-size:10px;font-weight:600;color:rgba(255,255,255,.88);
+  text-align:center;text-shadow:0 1px 6px rgba(0,0,0,.9);
+  white-space:nowrap;
+}
+
+/* ── DESKTOP PHOTOS (polaroid) ───────────────────── */
+.dp{
+  position:absolute;
+  background:#fff;
+  padding:10px 10px 32px;
+  box-shadow:4px 6px 22px rgba(0,0,0,.48),0 1px 0 rgba(255,255,255,.08);
+  z-index:7;cursor:pointer;
+  width:188px;
+  transition:transform .22s cubic-bezier(.34,1.56,.64,1),box-shadow .22s,z-index 0s;
+}
+.dp:hover{
+  transform:scale(1.08) rotate(0deg) !important;
+  box-shadow:8px 14px 40px rgba(0,0,0,.6);
+  z-index:20;
+}
+.dp img{
+  width:168px;height:122px;
+  object-fit:cover;display:block;
+}
+.dp-cap{
+  text-align:center;font-size:9px;color:#777;
+  margin-top:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;
+  text-transform:uppercase;letter-spacing:.8px;
+}
+
+/* ── LIGHTBOX ────────────────────────────────────── */
+#lightbox{
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(0,0,0,.88);
+  backdrop-filter:blur(10px);
+  display:none;align-items:center;justify-content:center;
+  cursor:zoom-out;
+}
+#lightbox.show{display:flex}
+#lightbox img{
+  max-width:88vw;max-height:88vh;
+  object-fit:contain;border-radius:6px;
+  box-shadow:0 30px 80px rgba(0,0,0,.7);
+  cursor:default;
+}
+
+/* ── WINDOWS ──────────────────────────────────────── */
+.win{
+  position:absolute;
+  background:var(--glass-win);
+  backdrop-filter:blur(60px) saturate(180%);
+  border-radius:14px;
+  box-shadow:0 40px 100px rgba(0,0,0,.6),0 0 0 .5px rgba(255,255,255,.25);
+  display:flex;flex-direction:column;
+  opacity:0;transform:scale(.88) translateY(20px);
+  pointer-events:none;
+  transition:opacity .28s ease,transform .28s cubic-bezier(.34,1.2,.64,1);
+  color:var(--text-dark);
+  overflow:hidden;
+  min-width:440px;min-height:300px;
+  max-height:82vh;
+}
+.win.open{opacity:1;transform:scale(1) translateY(0);pointer-events:all}
+
+/* Traffic lights */
+.winbar{
+  display:flex;align-items:center;gap:8px;
+  padding:13px 16px 11px;
+  background:rgba(0,0,0,.03);
+  border-bottom:1px solid rgba(0,0,0,.07);
+  cursor:move;flex-shrink:0;
+  -webkit-user-select:none;user-select:none;
+}
+.tl{width:12px;height:12px;border-radius:50%;cursor:pointer;transition:filter .15s;flex-shrink:0}
+.tl:hover{filter:brightness(.78)}
+.tl.r{background:#ff5f57}
+.tl.y{background:#febc2e}
+.tl.g{background:#28c840}
+.wtitle{
+  flex:1;text-align:center;font-size:12px;font-weight:600;color:#555;
+  margin-right:36px;
+}
+.wbody{
+  flex:1;overflow-y:auto;padding:22px 24px;
+  font-size:13px;line-height:1.65;color:#2d2d3a;
+}
+.wbody::-webkit-scrollbar{width:5px}
+.wbody::-webkit-scrollbar-thumb{background:rgba(0,0,0,.12);border-radius:3px}
+
+/* Window typography */
+.wbody h1{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:26px;font-weight:700;color:#0d0d1a;margin-bottom:2px;
+}
+.wbody .subtitle{
+  font-size:11px;font-weight:600;text-transform:uppercase;
+  letter-spacing:2px;color:#aaa;margin-bottom:18px;
+}
+.sec{
+  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;
+  color:#bbb;margin:22px 0 10px;padding-bottom:6px;
+  border-bottom:1px solid #eee;
+}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.tag{
+  padding:4px 10px;border-radius:20px;font-size:11px;font-weight:500;
+  background:#f0f0ff;color:#5555bb;
+}
+.tag.amber{background:#fff8e6;color:#b45309}
+.tag.green{background:#ecfdf5;color:#047857}
+
+/* Stats row */
+.stats{display:flex;gap:12px;margin:16px 0}
+.sbox{
+  flex:1;border-radius:12px;padding:14px 12px;text-align:center;color:#fff;
+  background:linear-gradient(135deg,var(--indigo),#8b5cf6);
+}
+.sbox.a{background:linear-gradient(135deg,var(--amber),#ef4444)}
+.sbox.g{background:linear-gradient(135deg,var(--emerald),#059669)}
+.sbox.p{background:linear-gradient(135deg,var(--pink),#8b5cf6)}
+.sn{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:26px;font-weight:700;display:block;
+}
+.sl{font-size:9px;opacity:.8;text-transform:uppercase;letter-spacing:1.2px}
+
+/* Timeline job */
+.job{
+  margin-bottom:20px;padding-left:14px;
+  border-left:3px solid #ece9ff;
+}
+.job.amber{border-left-color:#fde68a}
+.jhead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px}
+.jco{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#0d0d1a}
+.jdate{font-size:11px;color:#aaa;white-space:nowrap;margin-left:8px;flex-shrink:0}
+.jrole{font-size:12px;font-weight:600;color:var(--indigo);margin-bottom:6px}
+.jrole.amber{color:var(--amber)}
+.job ul{padding-left:14px}
+.job ul li{font-size:12px;color:#555;margin-bottom:3px}
+
+/* Project cards */
+.pcard{
+  border:1px solid #eaeaff;border-radius:12px;padding:16px;
+  margin-bottom:12px;transition:transform .2s,box-shadow .2s;
+  background:#fafafe;
+}
+.pcard:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(99,102,241,.1)}
+.ptop{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.pico{font-size:28px}
+.pbtn{
+  font-size:11px;font-weight:700;color:var(--indigo);
+  border:1px solid #c7c7f8;border-radius:20px;padding:4px 12px;
+  text-decoration:none;transition:background .2s;
+}
+.pbtn:hover{background:#ededff}
+.pbtn.dim{opacity:.4;cursor:default;pointer-events:none}
+.pcard h3{font-size:14px;font-weight:700;margin-bottom:4px;color:#1a1a2e}
+.pcard p{font-size:12px;color:#555;margin:0}
+
+/* Contact items */
+.citem{
+  display:flex;align-items:center;gap:14px;
+  padding:13px;border-radius:10px;margin-bottom:8px;
+  text-decoration:none;color:inherit;
+  background:#f8f8ff;transition:background .2s;
+}
+.citem:hover{background:#efeffb}
+.cico{font-size:20px;width:26px;text-align:center}
+.clbl{font-size:10px;color:#999;display:block;margin-bottom:1px}
+.cval{font-size:13px;font-weight:600;color:#1a1a2e}
+
+/* ── CORK BOARD ───────────────────────────────────── */
+.cork-bg{
+  background:#c9a87c;
+  background-image:
+    radial-gradient(circle at 20% 30%,rgba(180,130,80,.4) 0%,transparent 50%),
+    radial-gradient(circle at 80% 70%,rgba(210,165,100,.3) 0%,transparent 50%),
+    radial-gradient(circle at 50% 10%,rgba(160,110,60,.2) 0%,transparent 40%);
+  padding:20px 18px;
+  min-height:340px;
+}
+.cork-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+.pin-card{
+  background:#fffde7;
+  border-radius:3px;
+  padding:14px 14px 12px;
+  box-shadow:3px 5px 14px rgba(0,0,0,.28),0 1px 0 rgba(255,255,255,.5);
+  position:relative;
+  transition:transform .2s;
+  cursor:default;
+}
+.pin-card:nth-child(2n){transform:rotate(0.8deg)}
+.pin-card:nth-child(3n){transform:rotate(-1.2deg);background:#fff9f0}
+.pin-card:nth-child(4n){transform:rotate(0.4deg);background:#f0fff4}
+.pin-card:nth-child(5n){transform:rotate(-0.6deg);background:#fdf0ff}
+.pin-card:hover{transform:rotate(0deg) scale(1.03);z-index:10}
+.pin-card::before{
+  content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);
+  width:12px;height:12px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#ff6b6b,#c0392b);
+  box-shadow:0 2px 6px rgba(0,0,0,.4);
+}
+.pin-emoji{font-size:22px;display:block;margin-bottom:6px}
+.pin-title{font-size:12px;font-weight:700;color:#1a1a2e;margin-bottom:4px;line-height:1.3}
+.pin-detail{font-size:11px;color:#555;line-height:1.45}
+.pin-wide{grid-column:span 2}
+
+/* ── TROPHY SHELF ────────────────────────────────── */
+.shelf-bg{
+  background:linear-gradient(180deg,#fefefe 0%,#fdf8ef 100%);
+  padding:20px;
+}
+.shelf-board{
+  background:linear-gradient(180deg,#8b6914 0%,#a07820 50%,#7a5c10 100%);
+  border-radius:4px 4px 0 0;
+  padding:4px 16px 6px;
+  margin-bottom:0;
+  box-shadow:0 4px 0 #5c440c,0 6px 12px rgba(0,0,0,.25);
+  display:flex;align-items:center;justify-content:center;
+}
+.shelf-label{font-size:10px;font-weight:700;color:#fde68a;letter-spacing:2px;text-transform:uppercase}
+.trophy-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  padding:16px 0 0;
+}
+.trophy-item{
+  border-radius:12px;padding:16px 12px;text-align:center;
+  background:#fff;
+  border:1px solid rgba(245,158,11,.25);
+  box-shadow:0 4px 16px rgba(245,158,11,.08);
+  transition:transform .2s,box-shadow .2s;
+}
+.trophy-item:hover{transform:translateY(-4px);box-shadow:0 10px 28px rgba(245,158,11,.18)}
+.t-ico{font-size:32px;display:block;margin-bottom:8px}
+.t-name{font-size:11px;font-weight:700;color:#1a1a2e;line-height:1.3;margin-bottom:3px}
+.t-sub{font-size:10px;color:#999}
+
+/* ── PHOTOS ──────────────────────────────────────── */
+.photo-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+.photo-slot{
+  aspect-ratio:4/3;border-radius:10px;overflow:hidden;
+  background:#f0f0f0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:#bbb;font-size:11px;gap:6px;
+  border:2px dashed #e0e0e0;
+  cursor:pointer;transition:background .2s;
+}
+.photo-slot img{width:100%;height:100%;object-fit:cover;border-radius:8px}
+.photo-slot:hover{background:#e8e8f0}
+.photo-lbl{font-size:10px;font-weight:600;color:#999;margin-top:4px;text-align:center;padding:0 4px}
+
+/* ── DESKTOP CORK BOARD ──────────────────────────── */
+#desktop-board{
+  position:absolute;
+  left:16px;
+  bottom:82px;
+  width:380px;z-index:8;
+  /* top is set dynamically to sit below shelf */
+  top:300px;
+}
+.board-frame{
+  border:10px solid #4a2c0d;
+  border-radius:4px;
+  box-shadow:6px 8px 32px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.06);
+  background:#c4986a;
+  background-image:
+    radial-gradient(circle at 28% 38%,rgba(200,150,80,.5) 0%,transparent 55%),
+    radial-gradient(circle at 72% 62%,rgba(155,105,45,.4) 0%,transparent 50%);
+  padding:10px 10px 14px;
+  height:100%;
+  overflow-y:auto;
+}
+.board-frame::-webkit-scrollbar{width:3px}
+.board-frame::-webkit-scrollbar-thumb{background:rgba(0,0,0,.2);border-radius:2px}
+.board-heading{
+  font-size:9.5px;font-weight:700;text-transform:uppercase;
+  letter-spacing:2px;color:rgba(255,255,255,.45);
+  text-align:center;margin-bottom:8px;
+  text-shadow:0 1px 3px rgba(0,0,0,.4);
+}
+.bgroup{
+  font-size:8.5px;font-weight:700;text-transform:uppercase;
+  letter-spacing:1.5px;color:rgba(255,255,255,.3);
+  margin:9px 0 3px;padding-bottom:3px;
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+.bpin{
+  display:flex;align-items:flex-start;gap:7px;
+  padding:3px 4px;cursor:pointer;border-radius:4px;
+  transition:background .15s;
+}
+.bpin:hover{background:rgba(255,255,255,.14)}
+.pdot{
+  width:8px;height:8px;border-radius:50%;flex-shrink:0;
+  background:radial-gradient(circle at 35% 35%,#ff9a9a,#c0392b);
+  box-shadow:0 2px 5px rgba(0,0,0,.5);
+  margin-top:3px;
+}
+.ptxt{
+  font-size:10.5px;color:rgba(255,255,255,.88);
+  line-height:1.4;text-shadow:0 1px 3px rgba(0,0,0,.4);
+}
+.pbadge{
+  display:inline-block;font-size:8px;font-weight:700;
+  padding:1px 5px;border-radius:8px;margin-left:4px;
+  background:rgba(0,0,0,.28);color:rgba(255,255,255,.85);
+  vertical-align:middle;
+}
+
+/* ── DESKTOP TROPHY SHELF ────────────────────────── */
+#desktop-shelf{
+  position:absolute;top:48px;left:16px;
+  width:380px;z-index:8;
+}
+.shelf-header{
+  font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:2.5px;color:rgba(255,255,255,.4);
+  text-align:center;margin-bottom:10px;
+  text-shadow:0 1px 4px rgba(0,0,0,.5);
+}
+.shelf-row{
+  display:flex;justify-content:space-around;align-items:flex-end;
+  padding:0 10px 14px;gap:6px;
+}
+.shelf-item{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  cursor:pointer;padding:10px 8px;border-radius:12px;
+  flex:1;
+  transition:transform .22s cubic-bezier(.34,1.56,.64,1),background .15s;
+  position:relative;
+}
+.shelf-item:hover{transform:translateY(-12px) scale(1.15);background:rgba(255,255,255,.12)}
+.shelf-item:hover .sico{filter:drop-shadow(0 12px 18px rgba(0,0,0,.55))}
+.sico{
+  font-size:44px;
+  filter:drop-shadow(0 6px 12px rgba(0,0,0,.45));
+  line-height:1;
+  transition:filter .22s;
+}
+.slbl{
+  font-size:10px;font-weight:700;color:rgba(255,255,255,.8);
+  text-align:center;
+  text-shadow:0 1px 5px rgba(0,0,0,.7);
+  line-height:1.3;
+}
+.shelf-plank{
+  height:20px;position:relative;
+  background:linear-gradient(180deg,#c09040 0%,#956820 45%,#5c3f0e 100%);
+  border-radius:4px 4px 2px 2px;
+  box-shadow:0 7px 0 #3a2408,0 10px 22px rgba(0,0,0,.55);
+}
+.shelf-plank::before{
+  content:'';position:absolute;top:3px;left:16px;right:16px;
+  height:2px;background:rgba(255,255,255,.2);border-radius:2px;
+}
+.shelf-bracket{
+  position:absolute;bottom:-6px;
+  width:10px;height:28px;
+  background:linear-gradient(180deg,#a07030,#5c3f0e);
+  box-shadow:0 4px 10px rgba(0,0,0,.4);
+}
+.shelf-bracket.l{left:20px;border-radius:0 0 4px 4px}
+.shelf-bracket.r{right:20px;border-radius:0 0 4px 4px}
+
+/* ── ITEM POPUP ──────────────────────────────────── */
+#item-popup{
+  position:fixed;z-index:600;
+  background:rgba(248,248,252,.97);
+  border-radius:14px;
+  box-shadow:0 24px 70px rgba(0,0,0,.45),0 0 0 .5px rgba(255,255,255,.3);
+  padding:18px 20px 16px;width:292px;
+  display:none;
+  backdrop-filter:blur(30px);
+  color:var(--text-dark);
+}
+#item-popup.show{display:block;animation:popIn .22s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{from{opacity:0;transform:scale(.86) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.popup-x{
+  position:absolute;top:10px;right:12px;
+  background:rgba(0,0,0,.07);border:none;
+  width:20px;height:20px;border-radius:50%;
+  font-size:11px;color:#666;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.popup-x:hover{background:rgba(0,0,0,.13)}
+.popup-ico{font-size:26px;display:block;margin-bottom:8px}
+.popup-ttl{font-size:14px;font-weight:700;color:#0d0d1a;margin-bottom:6px;font-family:'Space Grotesk',sans-serif;line-height:1.3;padding-right:24px}
+.popup-bdy{font-size:12px;color:#555;line-height:1.6}
+.popup-src{display:inline-block;margin-top:10px;font-size:9px;font-weight:700;padding:2px 8px;border-radius:10px;background:#ededff;color:#5555bb}
+
+/* ── STICKY NOTES ────────────────────────────────── */
+.board-todo-hdr{
+  font-size:11px;font-weight:700;text-transform:uppercase;
+  letter-spacing:2px;color:rgba(255,255,255,.55);
+  text-align:center;margin-bottom:10px;
+  text-shadow:0 1px 4px rgba(0,0,0,.45);
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.sticky-grid{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  gap:8px;
+}
+.snote{
+  border-radius:2px;padding:9px 10px 11px;
+  cursor:pointer;position:relative;
+  box-shadow:3px 4px 12px rgba(0,0,0,.32),0 1px 0 rgba(255,255,255,.35) inset;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s,z-index 0s;
+  display:flex;flex-direction:column;min-height:78px;
+}
+.snote:hover{
+  transform:scale(1.09) rotate(-1.5deg);
+  box-shadow:5px 8px 20px rgba(0,0,0,.42);
+  z-index:20;
+}
+.snote::after{
+  content:'✓';position:absolute;top:6px;right:8px;
+  font-size:11px;font-weight:900;opacity:.6;
+}
+.snote.inprog::after{content:'→';color:#b45309}
+.sn-co{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;opacity:.55;margin-bottom:4px}
+.sn-ti{font-size:11px;font-weight:700;line-height:1.3;color:rgba(0,0,0,.8);flex:1}
+/* color variants */
+.sy{background:#fff59d} .sp{background:#f8bbd0} .sg{background:#c8e6c9}
+.sb{background:#bbdefb} .slv{background:#e1bee7} .so{background:#ffe0b2}
+
+/* ── STICKY MODAL ────────────────────────────────── */
+#sticky-modal{
+  position:fixed;inset:0;z-index:900;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(6px);
+  display:none;align-items:center;justify-content:center;
+}
+#sticky-modal.show{display:flex}
+.smodal-win{
+  background:rgba(248,248,252,.97);
+  border-radius:14px;
+  box-shadow:0 40px 100px rgba(0,0,0,.65),0 0 0 .5px rgba(255,255,255,.25);
+  width:500px;max-width:92vw;max-height:80vh;
+  overflow:hidden;display:flex;flex-direction:column;
+  color:var(--text-dark);
+  animation:popIn .26s cubic-bezier(.34,1.2,.64,1);
+}
+.smodal-bar{
+  display:flex;align-items:center;gap:8px;
+  padding:13px 16px 11px;
+  background:rgba(0,0,0,.03);
+  border-bottom:1px solid rgba(0,0,0,.07);
+}
+.smodal-ttl{
+  flex:1;text-align:center;font-size:12px;font-weight:600;color:#555;
+  margin-right:36px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.smodal-body{padding:22px 24px;overflow-y:auto;flex:1}
+.smodal-body::-webkit-scrollbar{width:5px}
+.smodal-body::-webkit-scrollbar-thumb{background:rgba(0,0,0,.12);border-radius:3px}
+.sm-company{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#aaa;margin-bottom:4px}
+.sm-headline{font-size:22px;font-weight:700;color:#0d0d1a;font-family:'Space Grotesk',sans-serif;margin-bottom:14px;line-height:1.2}
+.sm-desc{font-size:13px;color:#444;line-height:1.65}
+.sm-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}
+
+/* ── TODO LIST ───────────────────────────────────── */
+.todo-notepad{
+  background:#fffef5;border-radius:3px;
+  box-shadow:4px 6px 24px rgba(0,0,0,.32);
+  overflow:hidden;position:relative;
+}
+.todo-notepad::before{
+  content:'';position:absolute;
+  top:0;left:34px;bottom:0;
+  width:1px;background:rgba(255,100,100,.2);
+  pointer-events:none;
+}
+.todo-topbar{
+  background:linear-gradient(135deg,#6366f1,#8b5cf6);
+  padding:14px 18px 12px 42px;
+  display:flex;align-items:center;gap:10px;
+}
+.todo-topbar h3{font-size:14px;font-weight:700;color:#fff;margin:0}
+.todo-topbar span{font-size:11px;color:rgba(255,255,255,.6)}
+.todo-body{
+  padding:12px 18px 18px 42px;
+  background:repeating-linear-gradient(
+    transparent,transparent 27px,
+    #e8f2fa 27px,#e8f2fa 28px
+  );
+  line-height:28px;
+}
+.todo-group{font-size:9px;font-weight:700;text-transform:uppercase;
+  letter-spacing:1.8px;color:#bbb;padding-top:6px;margin-bottom:2px}
+.todo-row{display:flex;align-items:flex-start;gap:9px;padding:3px 0}
+.todo-box{
+  width:15px;height:15px;border-radius:3px;
+  background:#22c55e;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:3px;
+  font-size:9px;font-weight:900;
+  box-shadow:0 1px 4px rgba(34,197,94,.35);
+}
+.todo-txt{font-size:12px;color:#333;line-height:1.45;flex:1}
+.tbadge{
+  display:inline-block;font-size:9px;font-weight:700;
+  padding:1px 7px;border-radius:10px;margin-left:5px;vertical-align:middle;
+  background:#f0fdf4;color:#15803d;
+}
+.tbadge.b{background:#eff6ff;color:#1d4ed8}
+.tbadge.a{background:#fffbeb;color:#b45309}
+
+/* ── PROJECT DETAIL PANEL ───────────────────────── */
+.pcard{cursor:pointer}
+.pcard:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(99,102,241,.13)}
+#proj-detail{
+  position:absolute;inset:0;
+  background:var(--glass-win);
+  border-radius:0 0 14px 14px;
+  overflow-y:auto;padding:22px 24px;
+  opacity:0;pointer-events:none;
+  transform:translateX(28px);
+  transition:opacity .25s,transform .25s cubic-bezier(.34,1,.64,1);
+}
+#proj-detail.show{opacity:1;pointer-events:all;transform:translateX(0)}
+.pd-back{
+  display:flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:700;color:var(--indigo);
+  cursor:pointer;margin-bottom:16px;
+  background:none;border:none;padding:0;font-family:inherit;
+}
+.pd-back:hover{opacity:.7}
+.pd-metrics{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:10px;margin:14px 0 18px;
+}
+.pd-metric{
+  background:linear-gradient(135deg,#f7f8ff,#eef0ff);
+  border:1px solid #e2e4ff;border-radius:10px;
+  padding:12px 10px;text-align:center;
+}
+.pd-mn{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--indigo);display:block}
+.pd-ml{font-size:9px;color:#999;text-transform:uppercase;letter-spacing:1px}
+.pd-sec{font-size:9px;font-weight:700;text-transform:uppercase;
+  letter-spacing:1.8px;color:#bbb;margin:16px 0 8px;
+  padding-bottom:4px;border-bottom:1px solid #eee}
+.pd-feat{display:flex;gap:8px;margin-bottom:5px}
+.pd-feat::before{content:'→';color:var(--indigo);font-weight:700;flex-shrink:0;font-size:11px;margin-top:1px}
+.pd-feat span{font-size:12px;color:#444;line-height:1.45}
+.pd-status{
+  display:inline-block;padding:3px 10px;border-radius:12px;
+  font-size:10px;font-weight:700;margin-top:4px;
+}
+.pd-status.live{background:#ecfdf5;color:#047857}
+.pd-status.dev{background:#fffbeb;color:#b45309}
+
+/* ── DOCK ─────────────────────────────────────────── */
+#dock{
+  position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
+  display:flex;align-items:flex-end;gap:6px;padding:8px 14px 10px;
+  background:rgba(255,255,255,.11);backdrop-filter:blur(40px);
+  border-radius:22px;border:1px solid rgba(255,255,255,.15);
+  box-shadow:0 8px 40px rgba(0,0,0,.4);z-index:200;
+}
+.di{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;position:relative}
+.di-icon{
+  width:50px;height:50px;border-radius:13px;
+  display:flex;align-items:center;justify-content:center;font-size:26px;
+  box-shadow:0 4px 14px rgba(0,0,0,.35);
+  transition:transform .25s cubic-bezier(.34,1.56,.64,1);
+}
+.di:hover .di-icon{transform:translateY(-14px) scale(1.22)}
+.di-tip{
+  position:absolute;bottom:calc(100% + 10px);
+  font-size:10px;font-weight:700;
+  background:rgba(0,0,0,.75);color:#fff;
+  padding:3px 9px;border-radius:6px;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:opacity .15s;
+}
+.di:hover .di-tip{opacity:1}
+.di-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.7);display:none}
+.di-dot.on{display:block}
+</style>
+</head>
+<body>
+
+<!-- ── BOOT ─────────────────────────────────────── -->
+<div id="boot">
+  <div class="boot-monogram">RTJ</div>
+  <div class="boot-sub">Reginald Taylor-Johnson</div>
+  <div class="boot-bar"><div class="boot-fill"></div></div>
+</div>
+
+<!-- ── DESKTOP ───────────────────────────────────── -->
+<div id="desktop">
+
+  <!-- Ambient blobs -->
+  <div class="blob" style="width:500px;height:500px;background:rgba(99,102,241,.07);top:-100px;left:-100px;animation-duration:8s"></div>
+  <div class="blob" style="width:400px;height:400px;background:rgba(236,72,153,.06);bottom:-80px;right:200px;animation-duration:11s;animation-delay:-4s"></div>
+  <div class="blob" style="width:300px;height:300px;background:rgba(245,158,11,.05);top:200px;left:300px;animation-duration:9s;animation-delay:-2s"></div>
+
+  <!-- Menubar -->
+  <div id="menubar">
+    <div class="mb-name">Reggie Taylor-Johnson — Portfolio</div>
+    <div class="mb-links">
+      <a href="https://github.com/Coachjay510" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/reginald-taylor-johnson-b2594274/" target="_blank">LinkedIn</a>
+      <a href="mailto:reginald.taylor0114@gmail.com">Email</a>
+    </div>
+    <span id="clock"></span>
+  </div>
+
+  <!-- Desktop Icons -->
+  <div id="icons">
+    <div class="d-icon" onclick="openWin('about')">
+      <div class="d-img" style="background:linear-gradient(135deg,#ec4899,#8b5cf6)">👤</div>
+      <span class="d-lbl">About Me</span>
+    </div>
+    <div class="d-icon" onclick="openWin('tech')">
+      <div class="d-img" style="background:linear-gradient(135deg,#6366f1,#3b82f6)">💼</div>
+      <span class="d-lbl">Tech Career</span>
+    </div>
+    <div class="d-icon" onclick="openWin('projects')">
+      <div class="d-img" style="background:linear-gradient(135deg,#10b981,#0ea5e9)">🚀</div>
+      <span class="d-lbl">Projects</span>
+    </div>
+    <div class="d-icon" onclick="openWin('coaching')">
+      <div class="d-img" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">🏀</div>
+      <span class="d-lbl">Coaching</span>
+    </div>
+    <div class="d-icon" onclick="openWin('contact')">
+      <div class="d-img" style="background:linear-gradient(135deg,#14b8a6,#6366f1)">✉️</div>
+      <span class="d-lbl">Contact</span>
+    </div>
+  </div>
+
+  <!-- Hint -->
+  <div id="hint">Click folders to explore</div>
+
+  <!-- ── DESKTOP PHOTOS ────────────────────────── -->
+  <div class="dp" style="right:308px;bottom:96px;transform:rotate(-4deg)" onclick="openLightbox('photo4.png')">
+    <img src="photo4.png" alt="Reggie Taylor-Johnson">
+    <div class="dp-cap">Profile</div>
+  </div>
+  <div class="dp" style="right:86px;bottom:108px;transform:rotate(2.5deg)" onclick="openLightbox('photo1.jpg')">
+    <img src="photo1.jpg" alt="Game Day">
+    <div class="dp-cap">Game Day</div>
+  </div>
+  <div class="dp" style="right:296px;bottom:290px;transform:rotate(3deg)" onclick="openLightbox('photo3.jpg')">
+    <img src="photo3.jpg" alt="Delta Dubs">
+    <div class="dp-cap">Delta Dubs</div>
+  </div>
+  <div class="dp" style="right:76px;bottom:278px;transform:rotate(-2deg)" onclick="openLightbox('photo2.jpg')">
+    <img src="photo2.jpg" alt="On the Court">
+    <div class="dp-cap">On the Court</div>
+  </div>
+
+  <!-- ── LIGHTBOX ───────────────────────────────── -->
+  <div id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <!-- ── DESKTOP CORK BOARD ─────────────────────── -->
+  <div id="desktop-board">
+    <div class="board-frame">
+      <div class="board-todo-hdr">📋 TODO LIST</div>
+      <div class="sticky-grid">
+
+        <div class="snote sy" onclick="showStickyModal('juul_onboard')">
+          <div class="sn-co">Pax / Juul</div>
+          <div class="sn-ti">Onboarding &amp; Offboarding System</div>
+        </div>
+        <div class="snote so" onclick="showStickyModal('juul_scale')">
+          <div class="sn-co">Juul Labs</div>
+          <div class="sn-ti">Scaled IT for Growth</div>
+        </div>
+
+        <div class="snote sb" onclick="showStickyModal('side_org2org')">
+          <div class="sn-co">Side Inc</div>
+          <div class="sn-ti">Org2Org Bridge</div>
+        </div>
+        <div class="snote sg" onclick="showStickyModal('device_trust')">
+          <div class="sn-co">Side + New Relic</div>
+          <div class="sn-ti">Device Trust Policy</div>
+        </div>
+
+        <div class="snote sp" onclick="showStickyModal('okta_100')">
+          <div class="sn-co">New Relic</div>
+          <div class="sn-ti">100+ Apps → Okta SSO</div>
+        </div>
+        <div class="snote slv" onclick="showStickyModal('okta_60')">
+          <div class="sn-co">New Relic</div>
+          <div class="sn-ti">60% Faster Provisioning</div>
+        </div>
+
+        <div class="snote sy" onclick="showStickyModal('league_champs')">
+          <div class="sn-co">Freedom HS</div>
+          <div class="sn-ti">League Champions 🏆</div>
+        </div>
+        <div class="snote so" onclick="showStickyModal('delta_dubs')">
+          <div class="sn-co">Delta Dubs AAU</div>
+          <div class="sn-ti">Founded AAU Program</div>
+        </div>
+
+        <div class="snote sg" onclick="showStickyModal('np_tournaments')">
+          <div class="sn-co">App — Live</div>
+          <div class="sn-ti">NP Tournaments</div>
+        </div>
+        <div class="snote sb" onclick="showStickyModal('np_rankings')">
+          <div class="sn-co">App — Live</div>
+          <div class="sn-ti">NP Rankings</div>
+        </div>
+
+        <div class="snote sp" onclick="showStickyModal('flock')">
+          <div class="sn-co">App — Live</div>
+          <div class="sn-ti" style="display:flex;align-items:center;gap:5px"><img src="flock-logo.png" style="height:16px;border-radius:3px;flex-shrink:0"> Flock</div>
+        </div>
+        <div class="snote slv inprog" onclick="showStickyModal('film_room')">
+          <div class="sn-co">App — In Dev</div>
+          <div class="sn-ti">Film Room 🎬</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DESKTOP TROPHY SHELF ───────────────────── -->
+  <div id="desktop-shelf">
+    <div class="shelf-header">🏆 Awards &amp; Certifications</div>
+    <div class="shelf-row">
+      <div class="shelf-item" onclick="showPopup(event,'🏅','Okta Certified Professional','Industry certification validating expertise in Okta Workforce Identity — covering SSO, MFA, lifecycle management, and security policies. Part of the Okta professional certification track.','Certification · Identity &amp; Access Management')">
+        <div class="sico">🏅</div>
+        <div class="slbl">Okta<br>Professional</div>
+      </div>
+      <div class="shelf-item" onclick="showPopup(event,'🏅','Okta Certified Administrator','Advanced Okta certification demonstrating deep platform administration skills — managing users, groups, apps, policies, and reporting across the Workforce Identity Cloud.','Certification · Okta Administration')">
+        <div class="sico">🏅</div>
+        <div class="slbl">Okta<br>Administrator</div>
+      </div>
+      <div class="shelf-item" onclick="showPopup(event,'🎓','CompTIA A+','Industry-recognized IT foundation certification covering hardware, operating systems, networking, troubleshooting, and security. The starting point of an enterprise IT career.','Certification · CompTIA')">
+        <div class="sico">🎓</div>
+        <div class="slbl">CompTIA<br>A+</div>
+      </div>
+      <div class="shelf-item" onclick="showPopup(event,'🏆','League Champions 2025–26','Led Freedom HS Freshman Girls Basketball to an undefeated 6–0 league record and 8–2 overall — League Champions in just my first year as head coach.','Freedom HS · Freshman Girls · 2025–26')">
+        <div class="sico">🏆</div>
+        <div class="slbl">League<br>Champions</div>
+      </div>
+      <div class="shelf-item" onclick="showPopup(event,'🥇','AAU Program Founder','Founded Delta Dubs AAU in 2023. Built the entire organization — teams, systems, schedules, culture, and the software to run it — from scratch.','Delta Dubs AAU · Est. 2023')">
+        <div class="sico">🥇</div>
+        <div class="slbl">Program<br>Founder</div>
+      </div>
+    </div>
+    <div class="shelf-plank">
+      <div class="shelf-bracket l"></div>
+      <div class="shelf-bracket r"></div>
+    </div>
+  </div>
+
+  <!-- ── ITEM POPUP ─────────────────────────────── -->
+  <div id="item-popup">
+    <button class="popup-x" onclick="closePopup()">✕</button>
+    <span id="popup-ico" class="popup-ico"></span>
+    <div id="popup-ttl" class="popup-ttl"></div>
+    <div id="popup-bdy" class="popup-bdy"></div>
+    <div id="popup-src" class="popup-src"></div>
+  </div>
+
+  <!-- ── STICKY NOTE MODAL ─────────────────────── -->
+  <div id="sticky-modal" onclick="if(event.target===this)closeStickyModal()">
+    <div class="smodal-win">
+      <div class="smodal-bar">
+        <div class="tl r" onclick="closeStickyModal()"></div>
+        <div class="tl y" onclick="closeStickyModal()"></div>
+        <div class="tl g"></div>
+        <span class="smodal-ttl" id="sm-wintitle">Details</span>
+      </div>
+      <div class="smodal-body">
+        <div class="sm-company" id="sm-company"></div>
+        <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:6px">
+          <span id="sm-ico" style="font-size:38px;flex-shrink:0;margin-top:2px"></span>
+          <div class="sm-headline" id="sm-headline"></div>
+        </div>
+        <div class="sm-metrics" id="sm-metrics"></div>
+        <div class="sm-desc" id="sm-desc"></div>
+        <div id="sm-link" style="margin-top:16px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       WINDOWS
+  ════════════════════════════════════════════════ -->
+
+  <!-- ABOUT -->
+  <div class="win" id="win-about" style="width:560px;top:60px;left:calc(50% - 90px)">
+    <div class="winbar" onmousedown="drag(event,'win-about')">
+      <div class="tl r" onclick="closeWin('about')"></div>
+      <div class="tl y" onclick="minWin('about')"></div>
+      <div class="tl g"></div>
+      <div class="wtitle">About Me</div>
+    </div>
+    <div class="wbody">
+      <h1>Reginald Taylor-Johnson</h1>
+      <div class="subtitle">Senior Systems Engineer · Coach · Builder</div>
+      <div class="stats">
+        <div class="sbox"><span class="sn">11+</span><span class="sl">Years in IT</span></div>
+        <div class="sbox a"><span class="sn">3+</span><span class="sl">Years Coaching</span></div>
+        <div class="sbox g"><span class="sn">4</span><span class="sl">Apps Built</span></div>
+      </div>
+      <p style="color:#444;margin-bottom:12px">Based in Antioch, CA. I wear multiple hats. By day I design and secure enterprise infrastructure at scale. Off the clock I build software that solves real problems in youth basketball — and I coach on the sideline.</p>
+      <p style="color:#444;margin-bottom:12px">I founded <strong>Delta Dubs AAU</strong> to give kids access to structured basketball without financial barriers. That same belief — that systems and structure create opportunity — drives how I approach engineering and coaching alike.</p>
+      <div class="sec">What I do</div>
+      <div class="tags">
+        <span class="tag">IAM · Okta · Zero Trust</span>
+        <span class="tag">Cloud Infrastructure</span>
+        <span class="tag">Workflow Automation</span>
+        <span class="tag amber">Basketball Coach</span>
+        <span class="tag amber">Program Founder</span>
+        <span class="tag green">Full-Stack Builder</span>
+        <span class="tag green">Sports &amp; Consumer Tech</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TECH CAREER -->
+  <div class="win" id="win-tech" style="width:640px;top:70px;left:120px">
+    <div class="winbar" onmousedown="drag(event,'win-tech')">
+      <div class="tl r" onclick="closeWin('tech')"></div>
+      <div class="tl y" onclick="minWin('tech')"></div>
+      <div class="tl g"></div>
+      <div class="wtitle">Tech Career</div>
+    </div>
+    <div class="wbody">
+      <h1>Tech Career</h1>
+      <div class="subtitle">Senior Systems Engineer · IAM · Cloud Infrastructure</div>
+      <div class="sec">Certifications</div>
+      <div class="tags">
+        <span class="tag">Okta Certified Professional</span>
+        <span class="tag">Okta Certified Administrator</span>
+        <span class="tag">CompTIA A+</span>
+      </div>
+      <div class="sec">Core Skills</div>
+      <div class="tags">
+        <span class="tag">Okta · IAM · SSO</span>
+        <span class="tag">SAML · SCIM · OAuth2 · OIDC</span>
+        <span class="tag">Active Directory · Entra ID</span>
+        <span class="tag">Microsoft 365</span>
+        <span class="tag">Jamf · Intune · MDM · Device Trust</span>
+        <span class="tag">AWS · GCP</span>
+        <span class="tag">Automation & Lifecycle Mgmt</span>
+        <span class="tag">ServiceNow · Zendesk · Atlassian</span>
+        <span class="tag">SailPoint · BetterCloud · Workday</span>
+        <span class="tag">Network Infrastructure</span>
+      </div>
+      <div class="sec">Experience</div>
+      <div class="job">
+        <div class="jhead">
+          <span class="jco">Zelestra</span>
+          <span class="jdate">Oct 2024 – Dec 2025</span>
+        </div>
+        <div class="jrole">IAM Engineer & Systems Engineer</div>
+        <ul>
+          <li>Led architecture and delivery of secure, scalable cloud and on-prem infrastructure</li>
+          <li>Owned IAM strategy across Okta, Entra ID, and Active Directory — SSO, RBAC, MFA, Zero Trust</li>
+          <li>Administered Microsoft 365 and 40+ SaaS platforms across multi-site operations</li>
+          <li>Deployed switches, APs, and network hardware for new office builds</li>
+        </ul>
+      </div>
+      <div class="job">
+        <div class="jhead">
+          <span class="jco">New Relic</span>
+          <span class="jdate">Dec 2022 – Sept 2024</span>
+        </div>
+        <div class="jrole">Senior Systems Engineer (Okta)</div>
+        <ul>
+          <li>Integrated 100+ enterprise apps into Okta SSO — 85%+ centralized auth coverage</li>
+          <li>Automated onboarding/offboarding via Okta Workflows, <strong>cutting provisioning time by 60%</strong></li>
+          <li>Implemented Device Trust and conditional access for employees, contractors, and executives</li>
+          <li>Enforced MFA, least-privilege RBAC, and identity governance practices</li>
+        </ul>
+      </div>
+      <div class="job">
+        <div class="jhead">
+          <span class="jco">Side Inc</span>
+          <span class="jdate">Nov 2020 – Dec 2022</span>
+        </div>
+        <div class="jrole">IT Systems Administrator</div>
+        <ul>
+          <li>Built automated onboarding/offboarding processes — improved setup time and accuracy</li>
+          <li>Developed identity policies and governance controls across Okta, SCIM, and SaaS apps</li>
+          <li>Implemented SAML/OAuth/OIDC integrations for enterprise applications</li>
+        </ul>
+      </div>
+      <div class="job">
+        <div class="jhead">
+          <span class="jco">Pax Labs / Juul Labs</span>
+          <span class="jdate">Jul 2017 – Oct 2020</span>
+        </div>
+        <div class="jrole">IT Systems Administrator</div>
+        <ul>
+          <li>Automated lifecycle management for accounts and hardware provisioning</li>
+          <li>Administered AWS and GCP — IAM roles, networking, compute, access controls</li>
+          <li>Delivered KPI and infrastructure reporting to executive leadership</li>
+        </ul>
+      </div>
+      <div class="job">
+        <div class="jhead">
+          <span class="jco">Jawbone</span>
+          <span class="jdate">Jul 2013 – Jul 2017</span>
+        </div>
+        <div class="jrole">IT Desktop Support Specialist</div>
+        <ul>
+          <li>Built and deployed Mac/Windows devices via imaging tools and SCCM</li>
+          <li>Provided Tier 1–3 support for hardware, OS, and networking issues</li>
+          <li>Managed Active Directory accounts and permissions</li>
+          <li>Negotiated vendor contracts reducing operational costs</li>
+        </ul>
+      </div>
+      <div class="sec">Education</div>
+      <div class="tags">
+        <span class="tag">Year Up / City College of San Francisco</span>
+        <span class="tag">Los Angeles Film School</span>
+        <span class="tag">San Jose State University</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="win" id="win-projects" style="width:600px;top:90px;left:160px">
+    <div class="winbar" onmousedown="drag(event,'win-projects')">
+      <div class="tl r" onclick="closeWin('projects')"></div>
+      <div class="tl y" onclick="minWin('projects')"></div>
+      <div class="tl g"></div>
+      <div class="wtitle">Projects</div>
+    </div>
+
+    <!-- Card list -->
+    <div class="wbody" id="proj-list">
+      <h1>Projects</h1>
+      <div class="subtitle">Apps Built from Scratch — Click any card for details</div>
+      <p style="color:#555;font-size:12px;margin-bottom:18px">Four apps built from scratch — sports tech and consumer. No tutorials, no templates.</p>
+
+      <div class="pcard" onclick="showProject('tournaments')">
+        <div class="ptop">
+          <span class="pico">🏆</span>
+          <span class="pbtn">View Details →</span>
+        </div>
+        <h3>NP Tournaments</h3>
+        <p>Full tournament management platform for AAU directors — registration, auto-scheduler, brackets, scores, refs, payments.</p>
+        <div class="tags" style="margin-top:10px">
+          <span class="tag green">React</span><span class="tag green">Supabase</span><span class="tag green">Node.js</span><span class="tag green">Railway</span>
+          <span class="pd-status live" style="margin-left:auto">● Live</span>
+        </div>
+      </div>
+
+      <div class="pcard" onclick="showProject('rankings')">
+        <div class="ptop">
+          <span class="pico">📊</span>
+          <span class="pbtn">View Details →</span>
+        </div>
+        <h3>NP Rankings</h3>
+        <p>Custom AAU basketball ranking system with a data pipeline that aggregates real game results across multiple circuits.</p>
+        <div class="tags" style="margin-top:10px">
+          <span class="tag green">React</span><span class="tag green">PostgreSQL</span><span class="tag green">Data Pipeline</span>
+          <span class="pd-status live" style="margin-left:auto">● Live</span>
+        </div>
+      </div>
+
+      <div class="pcard" onclick="showProject('flock')">
+        <div class="ptop">
+          <img src="flock-logo.png" alt="Flock" style="height:34px;object-fit:contain;border-radius:6px">
+          <span class="pbtn">View Details →</span>
+        </div>
+        <h3>Flock</h3>
+        <p>Private Tesla family tracking app — real-time location, battery, speed, trip history, and seat occupancy across multiple vehicles on one map.</p>
+        <div class="tags" style="margin-top:10px">
+          <span class="tag green">Tesla API</span><span class="tag green">Real-time Maps</span><span class="tag green">React</span>
+          <span class="pd-status live" style="margin-left:auto">● Live</span>
+        </div>
+      </div>
+
+      <div class="pcard" onclick="showProject('filmroom')">
+        <div class="ptop">
+          <span class="pico">🎬</span>
+          <span class="pbtn">View Details →</span>
+        </div>
+        <h3>Film Room</h3>
+        <p>Coaching analysis tool for shot tracking, shot charts, and in-game decision breakdowns — data-driven insight for youth coaches.</p>
+        <div class="tags" style="margin-top:10px">
+          <span class="tag green">React</span><span class="tag green">Data Visualization</span>
+          <span class="pd-status dev" style="margin-left:auto">⚙ In Dev</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detail panel -->
+    <div id="proj-detail">
+      <button class="pd-back" onclick="closeProjectDetail()">← Back to Projects</button>
+      <div id="proj-detail-body"></div>
+    </div>
+  </div>
+
+  <!-- COACHING -->
+  <div class="win" id="win-coaching" style="width:580px;top:75px;left:140px">
+    <div class="winbar" onmousedown="drag(event,'win-coaching')">
+      <div class="tl r" onclick="closeWin('coaching')"></div>
+      <div class="tl y" onclick="minWin('coaching')"></div>
+      <div class="tl g"></div>
+      <div class="wtitle">Coaching Resume</div>
+    </div>
+    <div class="wbody">
+      <h1>Coaching</h1>
+      <div class="subtitle">Basketball Coach & Program Builder</div>
+      <div class="stats">
+        <div class="sbox a"><span class="sn">8–2</span><span class="sl">Overall Record</span></div>
+        <div class="sbox g"><span class="sn">6–0</span><span class="sl">League Record</span></div>
+        <div class="sbox p"><span class="sn">2023</span><span class="sl">Delta Dubs Founded</span></div>
+      </div>
+      <div class="sec">Experience</div>
+      <div class="job amber">
+        <div class="jhead">
+          <span class="jco">Freedom High School — Girls Basketball</span>
+          <span class="jdate">2025 – 2026</span>
+        </div>
+        <div class="jrole amber">Freshman Head Coach / Varsity Assistant</div>
+        <ul>
+          <li>Led Freshman team to an 8–2 overall and 6–0 league record</li>
+          <li>Developed players through fundamentals, defensive structure, and team concepts</li>
+          <li>Implemented a "Bingo Card" system for in-game team goals — boosted accountability and engagement</li>
+          <li>Supported Varsity program with player development and practice alignment</li>
+        </ul>
+      </div>
+      <div class="job amber">
+        <div class="jhead">
+          <span class="jco">Delta Dubs AAU</span>
+          <span class="jdate">2023 – Present</span>
+        </div>
+        <div class="jrole amber">Founder & Program Director</div>
+        <ul>
+          <li>Founded and operate multi-team AAU program across boys and girls divisions</li>
+          <li>Designed development system focused on access, structure, and long-term growth</li>
+          <li>Managed teams, tournaments, schedules, and parent communication</li>
+          <li>Built community partnerships and fundraising initiatives</li>
+          <li>Built internal software to manage team operations, rankings, and film analysis</li>
+        </ul>
+      </div>
+      <div class="job amber">
+        <div class="jhead">
+          <span class="jco">Antioch Youth Center — Junior Warriors</span>
+          <span class="jdate">2021 – 2023</span>
+        </div>
+        <div class="jrole amber">Volunteer Coach</div>
+        <ul>
+          <li>Coached boys &amp; girls ages 7–11 in community youth basketball</li>
+          <li>Focused on fundamentals, teamwork, and building confidence at early development</li>
+          <li>Built strong family relationships reinforcing sportsmanship and accountability</li>
+        </ul>
+      </div>
+      <div class="sec">Core Competencies</div>
+      <div class="tags">
+        <span class="tag amber">Player Development</span>
+        <span class="tag amber">Program Leadership</span>
+        <span class="tag amber">Culture Building</span>
+        <span class="tag amber">Community Engagement</span>
+        <span class="tag amber">Youth Pipeline Development</span>
+        <span class="tag amber">Data-Driven Coaching</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="win" id="win-contact" style="width:420px;top:100px;left:220px">
+    <div class="winbar" onmousedown="drag(event,'win-contact')">
+      <div class="tl r" onclick="closeWin('contact')"></div>
+      <div class="tl y" onclick="minWin('contact')"></div>
+      <div class="tl g"></div>
+      <div class="wtitle">Contact</div>
+    </div>
+    <div class="wbody">
+      <h1>Get in Touch</h1>
+      <div class="subtitle">Open to new opportunities</div>
+      <br>
+      <a href="mailto:reginald.taylor0114@gmail.com" class="citem">
+        <span class="cico">✉️</span>
+        <div><span class="clbl">Email</span><span class="cval">reginald.taylor0114@gmail.com</span></div>
+      </a>
+      <a href="tel:5107593709" class="citem">
+        <span class="cico">📱</span>
+        <div><span class="clbl">Phone</span><span class="cval">510-759-3709</span></div>
+      </a>
+      <a href="https://github.com/Coachjay510" target="_blank" class="citem">
+        <span class="cico">🐙</span>
+        <div><span class="clbl">GitHub</span><span class="cval">github.com/Coachjay510</span></div>
+      </a>
+      <a href="https://www.linkedin.com/in/reginald-taylor-johnson-b2594274/" target="_blank" class="citem">
+        <span class="cico">💼</span>
+        <div><span class="clbl">LinkedIn</span><span class="cval">linkedin.com/in/reginald-taylor-johnson</span></div>
+      </a>
+      <a class="citem" style="cursor:default">
+        <span class="cico">📍</span>
+        <div><span class="clbl">Location</span><span class="cval">Antioch, CA — Open to Remote</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- achievements moved to desktop board above -->
+  <div class="win" id="win-achievements" style="width:620px;top:65px;left:100px;display:none">
+    <div class="winbar" onmousedown="drag(event,'win-achievements')">
+      <div class="tl r" onclick="closeWin('achievements')"></div>
+      <div class="tl y" onclick="minWin('achievements')"></div>
+      <div class="tl g"></div>
+      <div class="wtitle">Achievements</div>
+    </div>
+    <div class="wbody" style="padding:16px;background:#c9a87c;background-image:radial-gradient(circle at 20% 30%,rgba(160,110,60,.35) 0%,transparent 50%),radial-gradient(circle at 80% 70%,rgba(200,155,90,.25) 0%,transparent 50%)">
+      <div class="todo-notepad">
+        <div class="todo-topbar">
+          <h3>✅ Goals &amp; Achievements</h3>
+          <span>— all shipped</span>
+        </div>
+        <div class="todo-body">
+
+          <div class="todo-group">Pax Labs → Juul Labs</div>
+
+          <div class="todo-row">
+            <div class="todo-box">✓</div>
+            <div class="todo-txt">Built functioning onboarding &amp; offboarding workflow — 2nd IT hire at Pax/Juul</div>
+          </div>
+          <div class="todo-row">
+            <div class="todo-box">✓</div>
+            <div class="todo-txt">Architected system to support Juul's rapid growth
+              <span class="tbadge">10–15 new hires / Monday</span></div>
+          </div>
+          <div class="todo-row">
+            <div class="todo-box">✓</div>
+            <div class="todo-txt">Scaled IT team and infrastructure to support the company
+              <span class="tbadge">~10 team members</span>
+              <span class="tbadge b">~2,000 employees</span></div>
+          </div>
+
+          <div class="todo-group">Side Inc</div>
+
+          <div class="todo-row">
+            <div class="todo-box">✓</div>
+            <div class="todo-txt">Built Okta Org2Org integration — bridged internal employees with external customers across separate orgs</div>
+          </div>
+
+          <div class="todo-group">Side Inc + New Relic</div>
+
+          <div class="todo-row">
+            <div class="todo-box">✓</div>
+            <div class="todo-txt">Created Device Trust Policy for managed &amp; unmanaged devices — enforced proper auth flow across employees and all target applications</div>
+          </div>
+
+          <div class="todo-group">New Relic</div>
+
+          <div class="todo-row">
+            <div class="todo-box">✓</div>
+            <div class="todo-txt">Integrated 100+ enterprise apps into Okta SSO
+              <span class="tbadge b">85%+ centralized auth coverage</span></div>
+          </div>
+          <div class="todo-row">
+            <div class="todo-box">✓</div>
+            <div class="todo-txt">Automated lifecycle management — cut provisioning time
+              <span class="tbadge">60% faster</span></div>
+          </div>
+
+          <div class="todo-group">Freedom HS — Girls Basketball</div>
+
+          <div class="todo-row">
+            <div class="todo-box">✓</div>
+            <div class="todo-txt">Led Freshman team to league championship
+              <span class="tbadge">8–2 Overall</span>
+              <span class="tbadge b">6–0 League</span></div>
+          </div>
+          <div class="todo-row">
+            <div class="todo-box">✓</div>
+            <div class="todo-txt">Implemented Bingo Card system for in-game team accountability</div>
+          </div>
+
+          <div class="todo-group">Delta Dubs AAU</div>
+
+          <div class="todo-row">
+            <div class="todo-box">✓</div>
+            <div class="todo-txt">Founded multi-team AAU program from scratch — boys &amp; girls divisions
+              <span class="tbadge a">Est. 2023</span></div>
+          </div>
+          <div class="todo-row">
+            <div class="todo-box">✓</div>
+            <div class="todo-txt">Built internal software suite to manage teams, tournaments, rankings &amp; film</div>
+          </div>
+
+          <div class="todo-group">Self-Built Apps</div>
+
+          <div class="todo-row">
+            <div class="todo-box">✓</div>
+            <div class="todo-txt">NP Tournaments — full tournament management platform, live in production</div>
+          </div>
+          <div class="todo-row">
+            <div class="todo-box">✓</div>
+            <div class="todo-txt">NP Rankings — custom data pipeline tracking
+              <span class="tbadge b">7,000+ games</span>
+              across multiple circuits</div>
+          </div>
+          <div class="todo-row">
+            <div class="todo-box" style="background:#f59e0b">→</div>
+            <div class="todo-txt" style="color:#888">Film Room — shot tracking &amp; analytics tool
+              <span class="tbadge a">In Development</span></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- awards moved to desktop shelf above -->
+  <div class="win" id="win-awards" style="width:580px;top:80px;left:140px;display:none">
+    <div class="winbar" onmousedown="drag(event,'win-awards')">
+      <div class="tl r" onclick="closeWin('awards')"></div>
+      <div class="tl y" onclick="minWin('awards')"></div>
+      <div class="tl g"></div>
+      <div class="wtitle">Awards & Certifications</div>
+    </div>
+    <div class="wbody shelf-bg">
+      <div class="shelf-board">
+        <span class="shelf-label">Certifications & Awards</span>
+      </div>
+      <div class="trophy-grid">
+
+        <div class="trophy-item">
+          <span class="t-ico">🏅</span>
+          <div class="t-name">Okta Certified Professional</div>
+          <div class="t-sub">Identity & Access Management</div>
+        </div>
+
+        <div class="trophy-item">
+          <span class="t-ico">🏅</span>
+          <div class="t-name">Okta Certified Administrator</div>
+          <div class="t-sub">Workforce Identity Cloud</div>
+        </div>
+
+        <div class="trophy-item">
+          <span class="t-ico">🎓</span>
+          <div class="t-name">CompTIA A+</div>
+          <div class="t-sub">IT Fundamentals & Hardware</div>
+        </div>
+
+        <div class="trophy-item">
+          <span class="t-ico">🏆</span>
+          <div class="t-name">League Champions</div>
+          <div class="t-sub">Freedom HS Freshman Girls · 2025–26</div>
+        </div>
+
+        <div class="trophy-item">
+          <span class="t-ico">🥇</span>
+          <div class="t-name">AAU Program Founder</div>
+          <div class="t-sub">Delta Dubs AAU · Est. 2023</div>
+        </div>
+
+        <div class="trophy-item">
+          <span class="t-ico">🛠️</span>
+          <div class="t-name">Full-Stack Builder</div>
+          <div class="t-sub">3 Production Apps · Solo Built</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- PHOTOS -->
+  <div class="win" id="win-photos" style="width:620px;top:75px;left:calc(50% - 70px)">
+    <div class="winbar" onmousedown="drag(event,'win-photos')">
+      <div class="tl r" onclick="closeWin('photos')"></div>
+      <div class="tl y" onclick="minWin('photos')"></div>
+      <div class="tl g"></div>
+      <div class="wtitle">Photos</div>
+    </div>
+    <div class="wbody">
+      <h1>Photos</h1>
+      <div class="subtitle">On the court & in the field</div>
+      <div class="photo-grid" style="grid-template-columns:1fr 1fr;gap:12px">
+        <div class="photo-slot" style="aspect-ratio:3/2;border:none;background:transparent">
+          <img src="photo1.jpg" alt="Game Day" style="width:100%;height:100%;object-fit:cover;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.15)">
+        </div>
+        <div class="photo-slot" style="aspect-ratio:3/2;border:none;background:transparent">
+          <img src="photo2.jpg" alt="Coaching" style="width:100%;height:100%;object-fit:cover;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.15)">
+        </div>
+        <div class="photo-slot" style="aspect-ratio:3/2;border:none;background:transparent">
+          <img src="photo3.jpg" alt="On the court" style="width:100%;height:100%;object-fit:cover;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.15)">
+        </div>
+        <div class="photo-slot" style="aspect-ratio:3/2;border:none;background:transparent">
+          <img src="photo4.png" alt="Reggie Taylor-Johnson" style="width:100%;height:100%;object-fit:cover;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.15)">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DOCK ─────────────────────────────────────── -->
+  <div id="dock">
+    <div class="di" onclick="openWin('about')">
+      <span class="di-tip">About Me</span>
+      <div class="di-icon" style="background:linear-gradient(135deg,#ec4899,#8b5cf6)">👤</div>
+      <div class="di-dot" id="dot-about"></div>
+    </div>
+    <div class="di" onclick="openWin('tech')">
+      <span class="di-tip">Tech Career</span>
+      <div class="di-icon" style="background:linear-gradient(135deg,#6366f1,#3b82f6)">💼</div>
+      <div class="di-dot" id="dot-tech"></div>
+    </div>
+    <div class="di" onclick="openWin('projects')">
+      <span class="di-tip">Projects</span>
+      <div class="di-icon" style="background:linear-gradient(135deg,#10b981,#0ea5e9)">🚀</div>
+      <div class="di-dot" id="dot-projects"></div>
+    </div>
+    <div class="di" onclick="openWin('coaching')">
+      <span class="di-tip">Coaching</span>
+      <div class="di-icon" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">🏀</div>
+      <div class="di-dot" id="dot-coaching"></div>
+    </div>
+    <div class="di" onclick="openWin('contact')">
+      <span class="di-tip">Contact</span>
+      <div class="di-icon" style="background:linear-gradient(135deg,#14b8a6,#6366f1)">✉️</div>
+      <div class="di-dot" id="dot-contact"></div>
+    </div>
+    <div class="di" onclick="openWin('photos')">
+      <span class="di-tip">Photos</span>
+      <div class="di-icon" style="background:linear-gradient(135deg,#818cf8,#4f46e5)">📷</div>
+      <div class="di-dot" id="dot-photos"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Boot ──────────────────────────────────────────
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('boot').classList.add('out')
+    document.getElementById('desktop').classList.add('on')
+    setTimeout(() => {
+      document.getElementById('boot').remove()
+      setTimeout(() => openWin('about'), 400)
+    }, 900)
+  }, 2400)
+})
+
+// ── Clock ─────────────────────────────────────────
+function tick() {
+  const n = new Date()
+  document.getElementById('clock').textContent =
+    n.toLocaleString('en-US', {weekday:'short',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})
+}
+tick(); setInterval(tick, 1000)
+
+// ── Window state ──────────────────────────────────
+let topZ = 50
+const open = new Set()
+
+function openWin(id) {
+  const w = document.getElementById(`win-${id}`)
+  if (!w) return
+  if (open.has(id)) {
+    closeWin(id)
+    return
+  }
+  w.style.zIndex = ++topZ
+  w.classList.add('open')
+  open.add(id)
+  const d = document.getElementById(`dot-${id}`)
+  if (d) d.classList.add('on')
+}
+function closeWin(id) {
+  document.getElementById(`win-${id}`)?.classList.remove('open')
+  open.delete(id)
+  document.getElementById(`dot-${id}`)?.classList.remove('on')
+}
+function minWin(id) {
+  document.getElementById(`win-${id}`)?.classList.remove('open')
+}
+
+// Bring window to front on click
+document.querySelectorAll('.win').forEach(w => {
+  w.addEventListener('mousedown', () => { w.style.zIndex = ++topZ })
+})
+
+// ── Drag ──────────────────────────────────────────
+let dragging = null, ox = 0, oy = 0
+
+function drag(e, id) {
+  if (e.target.classList.contains('tl')) return
+  dragging = document.getElementById(id)
+  ox = e.clientX - dragging.offsetLeft
+  oy = e.clientY - dragging.offsetTop
+  dragging.style.zIndex = ++topZ
+  e.preventDefault()
+}
+
+document.addEventListener('mousemove', e => {
+  if (!dragging) return
+  const x = Math.max(0, Math.min(e.clientX - ox, innerWidth - dragging.offsetWidth))
+  const y = Math.max(30, Math.min(e.clientY - oy, innerHeight - dragging.offsetHeight - 82))
+  dragging.style.left = x + 'px'
+  dragging.style.top = y + 'px'
+})
+document.addEventListener('mouseup', () => { dragging = null })
+
+// ── Sticky Note Modal Data ────────────────────────
+const STICKY_ITEMS = {
+  juul_onboard: {
+    ico:'🔧', company:'Pax Labs → Juul Labs',
+    title:'Onboarding & Offboarding System',
+    desc:'Built a fully functioning onboarding & offboarding workflow as the 2nd IT hire at Pax/Juul. The system was designed from scratch and architected to scale — at peak the team was processing 10–15 new hires every Monday. IT grew from 2 → 10+ members supporting ~2,000 employees at scale.',
+    metrics:[{n:'2nd',l:'IT Hire'},{n:'10–15',l:'New Hires/Mon'},{n:'~2,000',l:'Employees'}],
+  },
+  juul_scale: {
+    ico:'📈', company:'Juul Labs',
+    title:'Scaled IT for Rapid Growth',
+    desc:'Grew the IT team from 2 → 10+ members and built the infrastructure, tooling, and processes to support Juul\'s explosive expansion across multiple office sites — without breaking operations or compromising security.',
+    metrics:[{n:'2→10+',l:'Team Size'},{n:'Multi-site',l:'Operations'},{n:'~2,000',l:'Employees'}],
+  },
+  side_org2org: {
+    ico:'🔗', company:'Side Inc',
+    title:'Okta Org2Org Integration',
+    desc:'Using Okta\'s Org2Org capability, built a secure identity bridge between Side Inc\'s internal employee org and their external customer-facing org — enabling seamless, controlled cross-org access without compromising either environment\'s security posture.',
+    metrics:[{n:'Org2Org',l:'Architecture'},{n:'Internal ↔',l:'Customer Bridge'},{n:'Zero Trust',l:'Boundary'}],
+  },
+  device_trust: {
+    ico:'🛡️', company:'Side Inc + New Relic',
+    title:'Device Trust Policy',
+    desc:'Designed and implemented Device Trust policies governing access for both managed and unmanaged devices. Enforced proper device posture checks at the Okta layer — ensuring the right authentication flow was applied before any user reached a target application, across all employees, contractors, and device types.',
+    metrics:[{n:'Managed',l:'Devices'},{n:'Unmanaged',l:'Devices'},{n:'All Apps',l:'Covered'}],
+  },
+  okta_100: {
+    ico:'🔐', company:'New Relic',
+    title:'100+ Apps into Okta SSO',
+    desc:'Integrated over 100 enterprise applications into Okta SSO across SAML, OIDC, and SWA — achieving 85%+ centralized authentication coverage across New Relic\'s global workforce. Every major SaaS platform brought under a single identity umbrella.',
+    metrics:[{n:'100+',l:'Apps Integrated'},{n:'85%+',l:'Auth Coverage'},{n:'Global',l:'Workforce'}],
+  },
+  okta_60: {
+    ico:'⚡', company:'New Relic',
+    title:'60% Faster Provisioning',
+    desc:'Automated the full onboarding and offboarding lifecycle using Okta Workflows — cutting manual provisioning time by 60% and eliminating access errors. New hires got day-1 access to every tool they needed. Leavers were fully deprovisioned within minutes.',
+    metrics:[{n:'60%',l:'Time Saved'},{n:'Day 1',l:'Access Ready'},{n:'Minutes',l:'Offboard Time'}],
+  },
+  league_champs: {
+    ico:'🏆', company:'Freedom HS · Freshman Girls Basketball',
+    title:'League Champions 2025–26',
+    desc:'Led the Freedom High School Freshman Girls Basketball team through the season finishing 8–2 overall with a perfect 6–0 undefeated league record — League Champions. Implemented the Bingo Card accountability system to make in-game goals tangible and build team culture.',
+    metrics:[{n:'8–2',l:'Overall Record'},{n:'6–0',l:'League Record'},{n:'Champions',l:'2025–26'}],
+  },
+  delta_dubs: {
+    ico:'🏀', company:'Delta Dubs AAU · Est. 2023',
+    title:'Founded AAU Program from Scratch',
+    desc:'Founded and operate a multi-team AAU basketball program serving boys and girls divisions in the East Bay. Built the entire operation from the ground up — team rosters, tournament scheduling, parent communications, community partnerships, and all the internal software to run it.',
+    metrics:[{n:'Est. 2023',l:'Founded'},{n:'Boys+Girls',l:'Divisions'},{n:'East Bay',l:'Location'}],
+  },
+  np_tournaments: {
+    ico:'🏆', company:'App · Live in Production',
+    title:'NP Tournaments',
+    desc:'Full tournament management platform built for AAU directors. Handles the entire event lifecycle — team registration, smart auto-scheduler (with court, time, and coach conflict enforcement), bracket generation, score entry, ref assignments, and payment tracking.',
+    metrics:[{n:'Live',l:'In Production'},{n:'Solo Built',l:'No Templates'},{n:'Full Stack',l:'End-to-End'}],
+    link:'https://np-tournaments.vercel.app',
+  },
+  np_rankings: {
+    ico:'📊', company:'App · Live in Production',
+    title:'NP Rankings',
+    desc:'Custom AAU basketball ranking engine powered by a data pipeline that aggregates real game results from multiple circuits. XHR interceptor captures raw data → normalized in Supabase → smart team-matching algorithm → ranked views by division, gender, and age group.',
+    metrics:[{n:'7,000+',l:'Games Tracked'},{n:'3+',l:'Circuits'},{n:'Live',l:'In Production'}],
+    link:'https://np-rankings.vercel.app',
+  },
+  flock: {
+    ico:'🐦', company:'App · Live in Production',
+    title:'Flock',
+    desc:'Private Tesla family tracking app — real-time location monitoring, battery status, speed, trip history, street trace overlays, and seat occupancy detection across multiple vehicles on one map. Invite-only, built for families who want to know where everyone is.',
+    metrics:[{n:'30s',l:'Live Updates'},{n:'5',l:'Tesla Models'},{n:'Live',l:'In Production'}],
+    link:'https://getflock-app.com',
+  },
+  film_room: {
+    ico:'🎬', company:'App · In Development',
+    title:'Film Room',
+    desc:'Coaching analysis tool designed to bring data-driven insight to youth basketball without enterprise pricing. Shot selection tracking, interactive shot charts with heat map overlays, and in-game decision breakdowns — built for coaches who want real data, not just vibes.',
+    metrics:[{n:'In Dev',l:'Status'},{n:'Shot Charts',l:'Feature'},{n:'Analytics',l:'Coaching Data'}],
+  },
+}
+
+function showStickyModal(key) {
+  const d = STICKY_ITEMS[key]
+  if (!d) return
+  document.getElementById('sm-company').textContent = d.company
+  document.getElementById('sm-headline').textContent = d.title
+  document.getElementById('sm-wintitle').textContent = d.title
+  document.getElementById('sm-ico').textContent = d.ico
+  document.getElementById('sm-desc').textContent = d.desc
+  document.getElementById('sm-metrics').innerHTML = (d.metrics || []).map(m =>
+    `<div class="pd-metric"><span class="pd-mn">${m.n}</span><span class="pd-ml">${m.l}</span></div>`
+  ).join('')
+  document.getElementById('sm-link').innerHTML = d.link
+    ? `<a href="${d.link}" target="_blank" class="pbtn" style="display:inline-block">View Live App →</a>`
+    : ''
+  document.getElementById('sticky-modal').classList.add('show')
+}
+function closeStickyModal() {
+  document.getElementById('sticky-modal').classList.remove('show')
+}
+
+// ── Project Detail Data ───────────────────────────
+const PROJECT_DATA = {
+  tournaments: {
+    icon: '🏆',
+    name: 'NP Tournaments',
+    status: 'live',
+    statusLabel: '● Live in Production',
+    link: 'https://np-tournaments.vercel.app',
+    summary: 'Full-stack tournament management platform built for AAU directors to run end-to-end events — from team registration to final bracket results.',
+    metrics: [
+      { n: '3', l: 'Apps Shipped' },
+      { n: '1st', l: 'Tournament Managed' },
+      { n: '∞', l: 'Future Events' },
+    ],
+    features: [
+      'Smart auto-scheduler with court, time slot, and coach conflict enforcement',
+      'Team registration portal with coach accounts and public sign-up',
+      'Live bracket generation and score entry by directors',
+      'Referee assignment and pool/round management',
+      'Payment tracking per team per tournament',
+      'Public-facing tournament pages with schedules and results',
+      'Admin dashboard with multi-tournament view',
+    ],
+    stack: ['React', 'Supabase', 'Node.js / Express', 'Vercel', 'Railway', 'PostgreSQL'],
+  },
+  rankings: {
+    icon: '📊',
+    name: 'NP Rankings',
+    status: 'live',
+    statusLabel: '● Live in Production',
+    link: 'https://np-rankings.vercel.app',
+    summary: 'Custom AAU basketball ranking engine that aggregates real game results from multiple circuits and ranks teams by division, gender, and age group.',
+    metrics: [
+      { n: '7,000+', l: 'Games Tracked' },
+      { n: '3+', l: 'Circuits' },
+      { n: '100s', l: 'Teams Ranked' },
+    ],
+    features: [
+      'Custom XHR interceptor script that captures live game data from third-party bracket sites',
+      'Data pipeline: raw captures → bt_raw_imports → normalized bt_games → ranked views',
+      'Smart team matching: links cross-circuit teams to master team profiles by name, division, and org',
+      'Ranking engine weights wins, point differential, and opponent strength',
+      'Filter by division, gender, age group, circuit, and date range',
+      'Team profile pages with full game history and head-to-head stats',
+      'Auto-link system to resolve unmatched team records at import time',
+    ],
+    stack: ['React', 'PostgreSQL', 'Supabase', 'Node.js', 'Custom Data Pipeline', 'Vercel'],
+  },
+  flock: {
+    icon: '🐦',
+    name: 'Flock',
+    status: 'live',
+    statusLabel: '● Live in Production',
+    link: 'https://getflock-app.com',
+    summary: 'Private Tesla family tracking app — real-time location monitoring across multiple vehicles on one map. Know where your family is, how fast they\'re going, how much battery is left, and where they\'ve been.',
+    metrics: [
+      { n: '30s', l: 'Live Updates' },
+      { n: '5', l: 'Tesla Models' },
+      { n: 'Invite-Only', l: 'Private Access' },
+    ],
+    features: [
+      'Live map with 30-second location updates for all vehicles',
+      'Battery percentage and speed monitoring in real time',
+      'Trip history with addresses, duration, and mileage',
+      'Street trace overlay showing the exact route driven',
+      'Seat occupancy detection (7-seat Model X support)',
+      'Saved locations for quick navigation reference',
+      'Badge system for milestones and custom color per vehicle',
+      'Supports up to 5 Tesla models — private, invite-only access',
+      'Tiered pricing: Free (1 vehicle) · $9.99/mo (5 vehicles) · $24.99/mo (unlimited)',
+    ],
+    stack: ['React', 'Tesla API', 'Real-time Maps', 'Supabase', 'Node.js'],
+  },
+  filmroom: {
+    icon: '🎬',
+    name: 'Film Room',
+    status: 'dev',
+    statusLabel: '⚙ In Development',
+    link: null,
+    summary: 'Coaching analysis tool designed to bring data-driven insight to youth basketball coaches — without enterprise pricing or complexity.',
+    metrics: [
+      { n: '0→1', l: 'Building Solo' },
+      { n: 'TBD', l: 'Launch' },
+      { n: '$0', l: 'Templates Used' },
+    ],
+    features: [
+      'Shot selection tracking — log every shot attempt by type and location',
+      'Interactive shot charts with heat map overlays',
+      'In-game decision breakdown — track assists, turnovers, and reads',
+      'Player-level and team-level stat summaries',
+      'Game film annotation to tie decisions to data',
+      'Coach-friendly UI — designed for sideline speed, not data scientists',
+    ],
+    stack: ['React', 'Supabase', 'Data Visualization', 'Basketball Analytics'],
+  },
+}
+
+function showProject(key) {
+  const p = PROJECT_DATA[key]
+  if (!p) return
+  const metricsHtml = p.metrics.map(m =>
+    `<div class="pd-metric"><span class="pd-mn">${m.n}</span><span class="pd-ml">${m.l}</span></div>`
+  ).join('')
+  const featsHtml = p.features.map(f =>
+    `<div class="pd-feat"><span>${f}</span></div>`
+  ).join('')
+  const stackHtml = p.stack.map(s =>
+    `<span class="tag green">${s}</span>`
+  ).join('')
+  const linkHtml = p.link
+    ? `<a href="${p.link}" target="_blank" class="pbtn" style="display:inline-block;margin-top:14px">View Live App →</a>`
+    : `<span class="pd-status dev" style="display:inline-block;margin-top:14px">In Development</span>`
+
+  document.getElementById('proj-detail-body').innerHTML = `
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
+      <span style="font-size:32px">${p.icon}</span>
+      <div>
+        <h1 style="margin:0">${p.name}</h1>
+        <span class="pd-status ${p.status}" style="margin-top:4px;display:inline-block">${p.statusLabel}</span>
+      </div>
+    </div>
+    <p style="color:#555;font-size:13px;margin:12px 0 4px;line-height:1.6">${p.summary}</p>
+    <div class="pd-metrics">${metricsHtml}</div>
+    <div class="pd-sec">Key Features</div>
+    ${featsHtml}
+    <div class="pd-sec">Tech Stack</div>
+    <div class="tags">${stackHtml}</div>
+    ${linkHtml}
+  `
+  document.getElementById('proj-list').style.display = 'none'
+  const detail = document.getElementById('proj-detail')
+  detail.classList.add('show')
+  document.getElementById('win-projects').style.zIndex = ++topZ
+}
+
+function closeProjectDetail() {
+  document.getElementById('proj-detail').classList.remove('show')
+  document.getElementById('proj-list').style.display = ''
+}
+
+// ── Desktop Item Popup ────────────────────────────
+function showPopup(e, ico, title, body, src) {
+  e.stopPropagation()
+  document.getElementById('popup-ico').textContent = ico
+  document.getElementById('popup-ttl').innerHTML = title
+  document.getElementById('popup-bdy').innerHTML = body
+  document.getElementById('popup-src').textContent = src
+  const popup = document.getElementById('item-popup')
+  popup.style.display = 'none'
+  popup.classList.remove('show')
+  void popup.offsetWidth
+  popup.classList.add('show')
+  const rect = e.currentTarget.getBoundingClientRect()
+  let x = rect.right + 14
+  let y = rect.top
+  if (x + 296 > window.innerWidth) x = rect.left - 306
+  if (x < 6) x = 6
+  if (y + 260 > window.innerHeight) y = window.innerHeight - 266
+  if (y < 36) y = 36
+  popup.style.left = x + 'px'
+  popup.style.top = y + 'px'
+}
+function closePopup() {
+  document.getElementById('item-popup').classList.remove('show')
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('#item-popup') && !e.target.closest('.bpin') && !e.target.closest('.shelf-item'))
+    closePopup()
+})
+
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src
+  document.getElementById('lightbox').classList.add('show')
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('show')
+  document.getElementById('lightbox-img').src = ''
+}
+</script>
+</body>
+</html>
