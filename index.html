@@ -552,37 +552,52 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
 /* ── STICKY MODAL ────────────────────────────────── */
 #sticky-modal{
   position:fixed;inset:0;z-index:900;
-  background:rgba(0,0,0,.55);
-  backdrop-filter:blur(6px);
+  background:rgba(0,0,0,.45);
+  backdrop-filter:blur(4px);
   display:none;align-items:center;justify-content:center;
 }
 #sticky-modal.show{display:flex}
 .smodal-win{
-  background:rgba(248,248,252,.97);
-  border-radius:14px;
-  box-shadow:0 40px 100px rgba(0,0,0,.65),0 0 0 .5px rgba(255,255,255,.25);
-  width:500px;max-width:92vw;max-height:80vh;
+  position:relative;
+  background:#fff9c4;
+  border-radius:2px;
+  box-shadow:4px 8px 28px rgba(0,0,0,.42),0 1px 4px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.6);
+  width:380px;max-width:92vw;max-height:85vh;
   overflow:hidden;display:flex;flex-direction:column;
-  color:var(--text-dark);
+  transform:rotate(-0.6deg);
   animation:popIn .26s cubic-bezier(.34,1.2,.64,1);
 }
-.smodal-bar{
-  display:flex;align-items:center;gap:8px;
-  padding:13px 16px 11px;
-  background:rgba(0,0,0,.03);
-  border-bottom:1px solid rgba(0,0,0,.07);
+.smodal-win::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:6px;
+  background:rgba(0,0,0,.07);
 }
-.smodal-ttl{
-  flex:1;text-align:center;font-size:12px;font-weight:600;color:#555;
-  margin-right:36px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+/* color variants matching board notes */
+.smodal-win.sy{background:#fff9c4}
+.smodal-win.sp{background:#f8bbd0}
+.smodal-win.sg{background:#c8e6c9}
+.smodal-win.sb{background:#bbdefb}
+.smodal-win.slv{background:#e1bee7}
+.smodal-win.so{background:#ffe0b2}
+.smodal-close{
+  position:absolute;top:10px;right:10px;z-index:2;
+  background:rgba(0,0,0,.13);border:none;
+  width:22px;height:22px;border-radius:50%;
+  font-size:12px;color:rgba(0,0,0,.5);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .15s;font-weight:700;
+  font-family:inherit;
 }
-.smodal-body{padding:22px 24px;overflow-y:auto;flex:1}
-.smodal-body::-webkit-scrollbar{width:5px}
-.smodal-body::-webkit-scrollbar-thumb{background:rgba(0,0,0,.12);border-radius:3px}
-.sm-company{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#aaa;margin-bottom:4px}
-.sm-headline{font-size:22px;font-weight:700;color:#0d0d1a;font-family:'Space Grotesk',sans-serif;margin-bottom:14px;line-height:1.2}
-.sm-desc{font-size:13px;color:#444;line-height:1.65}
-.sm-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}
+.smodal-close:hover{background:rgba(0,0,0,.25);color:rgba(0,0,0,.8)}
+.smodal-body{padding:22px 20px 20px;overflow-y:auto;flex:1;margin-top:6px}
+.smodal-body::-webkit-scrollbar{width:4px}
+.smodal-body::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:2px}
+.sm-company{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(0,0,0,.42);margin-bottom:4px}
+.sm-headline{font-size:20px;font-weight:700;color:rgba(0,0,0,.82);font-family:'Space Grotesk',sans-serif;margin-bottom:14px;line-height:1.25}
+.sm-desc{font-size:12.5px;color:rgba(0,0,0,.65);line-height:1.65}
+.sm-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+.smodal-body .pd-metric{background:rgba(255,255,255,.45);border:1px solid rgba(0,0,0,.1)}
+.smodal-body .pd-mn{color:rgba(0,0,0,.78)}
+.smodal-body .pd-ml{color:rgba(0,0,0,.42)}
 
 /* ── TODO LIST ───────────────────────────────────── */
 .todo-notepad{
@@ -891,17 +906,12 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
 
   <!-- ── STICKY NOTE MODAL ─────────────────────── -->
   <div id="sticky-modal" onclick="if(event.target===this)closeStickyModal()">
-    <div class="smodal-win">
-      <div class="smodal-bar">
-        <div class="tl r" onclick="closeStickyModal()"></div>
-        <div class="tl y" onclick="closeStickyModal()"></div>
-        <div class="tl g"></div>
-        <span class="smodal-ttl" id="sm-wintitle">Details</span>
-      </div>
+    <div class="smodal-win sy">
+      <button class="smodal-close" onclick="closeStickyModal()">✕</button>
       <div class="smodal-body">
         <div class="sm-company" id="sm-company"></div>
-        <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:6px">
-          <span id="sm-ico" style="font-size:38px;flex-shrink:0;margin-top:2px"></span>
+        <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:6px">
+          <span id="sm-ico" style="font-size:34px;flex-shrink:0;margin-top:2px"></span>
           <div class="sm-headline" id="sm-headline"></div>
         </div>
         <div class="sm-metrics" id="sm-metrics"></div>
@@ -2073,12 +2083,17 @@ const STICKY_ITEMS = {
   },
 }
 
+const STICKY_COLORS = {
+  juul_onboard:'sy', juul_scale:'so', side_org2org:'sb', device_trust:'sg',
+  okta_100:'sp', okta_60:'slv', league_champs:'sy', delta_dubs:'so',
+  np_tournaments:'sg', np_rankings:'sb', flock:'sp', film_room:'slv',
+}
+
 function showStickyModal(key) {
   const d = STICKY_ITEMS[key]
   if (!d) return
   document.getElementById('sm-company').textContent = d.company
   document.getElementById('sm-headline').textContent = d.title
-  document.getElementById('sm-wintitle').textContent = d.title
   document.getElementById('sm-ico').textContent = d.ico
   document.getElementById('sm-desc').textContent = d.desc
   document.getElementById('sm-metrics').innerHTML = (d.metrics || []).map(m =>
@@ -2087,6 +2102,8 @@ function showStickyModal(key) {
   document.getElementById('sm-link').innerHTML = d.link
     ? `<a href="${d.link}" target="_blank" class="pbtn" style="display:inline-block">View Live App →</a>`
     : ''
+  const win = document.querySelector('.smodal-win')
+  win.className = 'smodal-win ' + (STICKY_COLORS[key] || 'sy')
   document.getElementById('sticky-modal').classList.add('show')
 }
 function closeStickyModal() {
