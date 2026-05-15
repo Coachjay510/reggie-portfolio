@@ -497,8 +497,10 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
 .wf-tab:hover{color:#c0cce0}
 .wf-tab.wf-tab-active{color:#6366f1;border-bottom:2px solid #6366f1;font-weight:700}
 /* ── Flow node highlight ────────────────────────── */
-.fnode{transform-box:fill-box;transform-origin:center;transition:filter .35s ease,transform .35s cubic-bezier(.34,1.56,.64,1)}
-.flit{transform:scale(1.08);filter:drop-shadow(0 0 10px rgba(255,255,255,.65)) drop-shadow(0 0 24px rgba(130,170,255,.5)) brightness(1.28)}
+.fnode{transition:filter .25s ease}
+.flit{filter:drop-shadow(0 0 2px #fff) drop-shadow(0 0 8px #fff) drop-shadow(0 0 18px #a5b4fc) drop-shadow(0 0 30px #6366f1)}
+.flit rect,.flit polygon{stroke:#fff;stroke-width:2.5px}
+.flit text{fill:#fff}
 .popup-x{
   position:absolute;top:10px;right:12px;
   background:rgba(0,0,0,.07);border:none;
@@ -2269,16 +2271,31 @@ const WF_NODES = {
 }
 let _wfTimer = null, _wfCur = 0, _wfName = null
 
+function _wfScrollTo(id) {
+  const el = document.getElementById(id)
+  const scroller = document.getElementById('wf-scroll')
+  if (!el || !scroller) return
+  const elR = el.getBoundingClientRect()
+  const sR  = scroller.getBoundingClientRect()
+  const offset = (elR.top + elR.height / 2) - (sR.top + sR.height / 2)
+  scroller.scrollBy({ top: offset, behavior: 'smooth' })
+}
+
+function _wfStep(nodes) {
+  nodes.forEach(id => document.getElementById(id)?.classList.remove('flit'))
+  const id = nodes[_wfCur]
+  document.getElementById(id)?.classList.add('flit')
+  _wfScrollTo(id)
+  _wfCur = (_wfCur + 1) % nodes.length
+}
+
 function startWfFlow(name) {
   stopWfFlow()
   _wfName = name
   _wfCur = 0
   const nodes = WF_NODES[name] || []
-  _wfTimer = setInterval(() => {
-    nodes.forEach(id => document.getElementById(id)?.classList.remove('flit'))
-    document.getElementById(nodes[_wfCur])?.classList.add('flit')
-    _wfCur = (_wfCur + 1) % nodes.length
-  }, 1800)
+  _wfStep(nodes)                          // highlight first node immediately
+  _wfTimer = setInterval(() => _wfStep(nodes), 2200)
 }
 
 function stopWfFlow() {
