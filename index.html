@@ -716,6 +716,106 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
 .di:hover .di-tip{opacity:1}
 .di-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.7);display:none}
 .di-dot.on{display:block}
+
+/* ── MOBILE VIEW ─────────────────────────────────── */
+#mobile-view{display:none}
+
+@media(max-width:768px){
+  html,body{height:auto!important;overflow-y:auto!important;overflow-x:hidden!important;background:#0a0a16}
+  #boot,#desktop{display:none!important}
+  #mobile-view{display:block;background:#0a0a16;min-height:100vh}
+  /* sticky modal fix */
+  .smodal-win{width:94vw!important;max-width:94vw!important;transform:rotate(-0.4deg)}
+}
+
+/* ── Mobile Hero ── */
+.m-hero{background:linear-gradient(180deg,#0d0d1a 0%,#1a0d2e 100%);padding:44px 20px 32px;text-align:center;border-bottom:1px solid rgba(99,102,241,.18)}
+.m-monogram{font-family:'Space Grotesk',sans-serif;font-size:56px;font-weight:700;letter-spacing:-3px;background:linear-gradient(135deg,#fff 0%,rgba(255,255,255,.45) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.m-name{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:4px}
+.m-subtitle{font-size:11px;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase;margin-bottom:22px}
+.m-hero-links{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.m-hero-links a{font-size:12px;font-weight:600;color:rgba(255,255,255,.7);text-decoration:none;padding:7px 16px;border:1px solid rgba(255,255,255,.15);border-radius:20px;transition:background .2s}
+.m-hero-links a:active{background:rgba(255,255,255,.1)}
+
+/* ── Mobile Nav ── */
+.m-nav{position:sticky;top:0;z-index:100;display:flex;overflow-x:auto;background:rgba(10,10,22,.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.07);padding:0 4px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.m-nav::-webkit-scrollbar{display:none}
+.m-nav a{flex-shrink:0;font-size:12px;font-weight:600;color:rgba(255,255,255,.45);text-decoration:none;padding:13px 13px;border-bottom:2px solid transparent;white-space:nowrap;transition:color .2s}
+.m-nav a:hover,.m-nav a:focus{color:#fff}
+
+/* ── Mobile Section ── */
+.m-section{padding:28px 16px;border-bottom:1px solid rgba(255,255,255,.05)}
+.m-sec-title{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.m-sec-sub{font-size:11px;color:rgba(255,255,255,.35);letter-spacing:1.8px;text-transform:uppercase;margin-bottom:14px;margin-top:-8px}
+
+/* ── Mobile Stats ── */
+.m-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:18px}
+.m-stat{border-radius:12px;padding:14px 6px;text-align:center;color:#fff;background:linear-gradient(135deg,var(--indigo),#8b5cf6)}
+.m-stat.a{background:linear-gradient(135deg,var(--amber),#ef4444)}
+.m-stat.g{background:linear-gradient(135deg,var(--emerald),#059669)}
+.m-stat.p{background:linear-gradient(135deg,var(--pink),#8b5cf6)}
+.m-sn{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;display:block}
+.m-sl{font-size:9px;opacity:.75;text-transform:uppercase;letter-spacing:.8px}
+
+/* ── Bio text ── */
+.m-bio{font-size:13.5px;color:rgba(255,255,255,.62);line-height:1.72;margin-bottom:12px}
+
+/* ── Tags on dark bg ── */
+.m-tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.m-tag{padding:5px 11px;border-radius:20px;font-size:11px;font-weight:500;background:rgba(99,102,241,.14);color:#a5b4fc;border:1px solid rgba(99,102,241,.2)}
+.m-tag.amber{background:rgba(245,158,11,.12);color:#fbbf24;border-color:rgba(245,158,11,.2)}
+.m-tag.green{background:rgba(16,185,129,.12);color:#34d399;border-color:rgba(16,185,129,.2)}
+
+/* ── Mobile Cork Board ── */
+.m-board{background:#c4986a;background-image:radial-gradient(circle at 28% 38%,rgba(200,150,80,.5) 0%,transparent 55%);border-radius:10px;padding:12px;border:8px solid #4a2c0d;box-shadow:4px 6px 20px rgba(0,0,0,.5)}
+.m-sticky-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.m-snote{border-radius:2px;padding:9px 10px 12px;cursor:pointer;position:relative;box-shadow:3px 4px 10px rgba(0,0,0,.3);min-height:70px;display:flex;flex-direction:column;transition:transform .15s}
+.m-snote:active{transform:scale(.95)}
+.m-snote::after{content:'✓';position:absolute;top:6px;right:8px;font-size:10px;opacity:.5}
+.m-snote.inprog::after{content:'→';color:#b45309}
+.m-sn-co{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;opacity:.55;margin-bottom:4px}
+.m-sn-ti{font-size:11px;font-weight:700;line-height:1.3;color:rgba(0,0,0,.8);flex:1}
+
+/* ── Mobile Trophy Shelf ── */
+.m-shelf{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.m-trophy{background:rgba(255,255,255,.05);border:1px solid rgba(245,158,11,.2);border-radius:12px;padding:16px 10px;text-align:center;transition:background .2s}
+.m-trophy:active{background:rgba(255,255,255,.08)}
+.m-t-ico{font-size:30px;display:block;margin-bottom:6px}
+.m-t-name{font-size:11px;font-weight:700;color:#fff;margin-bottom:2px;line-height:1.3}
+.m-t-sub{font-size:10px;color:rgba(255,255,255,.4)}
+
+/* ── Mobile Job/Timeline ── */
+.m-job{margin-bottom:22px;padding-left:14px;border-left:3px solid rgba(99,102,241,.35)}
+.m-job.amber{border-left-color:rgba(245,158,11,.35)}
+.m-jco{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:#fff;margin-bottom:2px}
+.m-jdate{font-size:11px;color:rgba(255,255,255,.3);margin-bottom:3px}
+.m-jrole{font-size:12px;font-weight:600;color:#818cf8;margin-bottom:7px}
+.m-jrole.amber{color:#fbbf24}
+.m-job ul{padding-left:14px}
+.m-job ul li{font-size:12px;color:rgba(255,255,255,.58);margin-bottom:4px;line-height:1.48}
+
+/* ── Mobile Project Card ── */
+.m-pcard{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;margin-bottom:12px}
+.m-ptop{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.m-pname{font-size:15px;font-weight:700;color:#fff;margin-bottom:5px}
+.m-pdesc{font-size:12.5px;color:rgba(255,255,255,.52);line-height:1.58;margin-bottom:10px}
+.m-plive{display:inline-block;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:700}
+.m-plive.live{background:rgba(16,185,129,.15);color:#34d399}
+.m-plive.dev{background:rgba(245,158,11,.12);color:#fbbf24}
+
+/* ── Mobile Contact ── */
+.m-citem{display:flex;align-items:center;gap:14px;padding:14px;border-radius:12px;margin-bottom:8px;text-decoration:none;color:inherit;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);transition:background .15s;-webkit-tap-highlight-color:transparent}
+.m-citem:active{background:rgba(255,255,255,.09)}
+.m-cico{font-size:22px;width:28px;text-align:center;flex-shrink:0}
+.m-clbl{font-size:10px;color:rgba(255,255,255,.32);display:block;margin-bottom:2px}
+.m-cval{font-size:13px;font-weight:600;color:#fff;word-break:break-all}
+
+/* ── Mobile Photos ── */
+.m-photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.m-photo-grid img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.45);cursor:pointer}
+
+/* ── Mobile Footer ── */
+.m-footer{text-align:center;padding:24px 16px 36px;font-size:11px;color:rgba(255,255,255,.18)}
 </style>
 </head>
 <body>
@@ -1927,6 +2027,328 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       <div class="di-dot" id="dot-workflows"></div>
     </div>
   </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     MOBILE VIEW (shown ≤768px, desktop hidden)
+═══════════════════════════════════════════════ -->
+<div id="mobile-view">
+
+  <!-- Hero -->
+  <div class="m-hero">
+    <div class="m-monogram">RTJ</div>
+    <div class="m-name">Reginald Taylor-Johnson</div>
+    <div class="m-subtitle">Senior Systems Engineer · Coach · Builder</div>
+    <div class="m-hero-links">
+      <a href="https://github.com/Coachjay510" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/reginald-taylor-johnson-b2594274/" target="_blank">LinkedIn</a>
+      <a href="mailto:reginald.taylor0114@gmail.com">Email</a>
+      <a href="tel:5107593709">Call</a>
+    </div>
+  </div>
+
+  <!-- Sticky Nav -->
+  <nav class="m-nav">
+    <a href="#m-about">👤 About</a>
+    <a href="#m-achievements">📋 Work</a>
+    <a href="#m-tech">💼 Career</a>
+    <a href="#m-projects">🚀 Projects</a>
+    <a href="#m-coaching">🏀 Coaching</a>
+    <a href="#m-awards">🏆 Awards</a>
+    <a href="#m-contact">✉️ Contact</a>
+  </nav>
+
+  <!-- About -->
+  <section class="m-section" id="m-about">
+    <div class="m-sec-title">👤 About Me</div>
+    <div class="m-stats">
+      <div class="m-stat"><span class="m-sn">11+</span><span class="m-sl">Years in IT</span></div>
+      <div class="m-stat a"><span class="m-sn">3+</span><span class="m-sl">Coaching</span></div>
+      <div class="m-stat g"><span class="m-sn">4</span><span class="m-sl">Apps Built</span></div>
+    </div>
+    <p class="m-bio">Based in Antioch, CA. I design and secure enterprise infrastructure at scale by day. Off the clock I build software that solves real problems in youth basketball — and coach on the sideline.</p>
+    <p class="m-bio">I founded <strong style="color:#fff">Delta Dubs AAU</strong> to give kids access to structured basketball without financial barriers. That same belief — that systems and structure create opportunity — drives how I approach engineering and coaching alike.</p>
+    <div class="m-tags">
+      <span class="m-tag">IAM · Okta · Zero Trust</span>
+      <span class="m-tag">Cloud Infrastructure</span>
+      <span class="m-tag">Workflow Automation</span>
+      <span class="m-tag amber">Basketball Coach</span>
+      <span class="m-tag amber">Program Founder</span>
+      <span class="m-tag green">Full-Stack Builder</span>
+      <span class="m-tag green">Sports &amp; Consumer Tech</span>
+    </div>
+  </section>
+
+  <!-- Key Achievements (sticky notes) -->
+  <section class="m-section" id="m-achievements">
+    <div class="m-sec-title">📋 Key Achievements</div>
+    <div class="m-sec-sub">Tap any note for details</div>
+    <div class="m-board">
+      <div class="m-sticky-grid">
+        <div class="m-snote sy" onclick="showStickyModal('juul_onboard')">
+          <div class="m-sn-co">Pax / Juul</div>
+          <div class="m-sn-ti">Onboarding &amp; Offboarding System</div>
+        </div>
+        <div class="m-snote so" onclick="showStickyModal('juul_scale')">
+          <div class="m-sn-co">Juul Labs</div>
+          <div class="m-sn-ti">Scaled IT for Growth</div>
+        </div>
+        <div class="m-snote sb" onclick="showStickyModal('side_org2org')">
+          <div class="m-sn-co">Side Inc</div>
+          <div class="m-sn-ti">Org2Org Bridge</div>
+        </div>
+        <div class="m-snote sg" onclick="showStickyModal('device_trust')">
+          <div class="m-sn-co">Side + New Relic</div>
+          <div class="m-sn-ti">Device Trust Policy</div>
+        </div>
+        <div class="m-snote sp" onclick="showStickyModal('okta_100')">
+          <div class="m-sn-co">New Relic</div>
+          <div class="m-sn-ti">100+ Apps → Okta SSO</div>
+        </div>
+        <div class="m-snote slv" onclick="showStickyModal('okta_60')">
+          <div class="m-sn-co">New Relic</div>
+          <div class="m-sn-ti">60% Faster Provisioning</div>
+        </div>
+        <div class="m-snote sy" onclick="showStickyModal('league_champs')">
+          <div class="m-sn-co">Freedom HS</div>
+          <div class="m-sn-ti">League Champions 🏆</div>
+        </div>
+        <div class="m-snote so" onclick="showStickyModal('delta_dubs')">
+          <div class="m-sn-co">Delta Dubs AAU</div>
+          <div class="m-sn-ti">Founded AAU Program</div>
+        </div>
+        <div class="m-snote sg" onclick="showStickyModal('np_tournaments')">
+          <div class="m-sn-co">App — Live</div>
+          <div class="m-sn-ti">NP Tournaments</div>
+        </div>
+        <div class="m-snote sb" onclick="showStickyModal('np_rankings')">
+          <div class="m-sn-co">App — Live</div>
+          <div class="m-sn-ti">NP Rankings</div>
+        </div>
+        <div class="m-snote sp" onclick="showStickyModal('flock')">
+          <div class="m-sn-co">App — Live</div>
+          <div class="m-sn-ti">Flock</div>
+        </div>
+        <div class="m-snote slv inprog" onclick="showStickyModal('film_room')">
+          <div class="m-sn-co">App — In Dev</div>
+          <div class="m-sn-ti">Film Room 🎬</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Career -->
+  <section class="m-section" id="m-tech">
+    <div class="m-sec-title">💼 Tech Career</div>
+    <div class="m-sec-sub">Senior Systems Engineer · IAM · Cloud</div>
+    <div class="m-tags" style="margin-bottom:18px">
+      <span class="m-tag">Okta · IAM · SSO</span>
+      <span class="m-tag">SAML · SCIM · OAuth2 · OIDC</span>
+      <span class="m-tag">Active Directory · Entra ID</span>
+      <span class="m-tag">Jamf · Intune · MDM · Device Trust</span>
+      <span class="m-tag">AWS · GCP</span>
+      <span class="m-tag">Microsoft 365</span>
+      <span class="m-tag">ServiceNow · Zendesk</span>
+    </div>
+    <div class="m-job">
+      <div class="m-jco">Zelestra</div>
+      <div class="m-jdate">Oct 2024 – Dec 2025</div>
+      <div class="m-jrole">IAM Engineer &amp; Systems Engineer</div>
+      <ul>
+        <li>Led architecture and delivery of secure, scalable cloud and on-prem infrastructure</li>
+        <li>Owned IAM strategy across Okta, Entra ID, and Active Directory — SSO, RBAC, MFA, Zero Trust</li>
+        <li>Administered Microsoft 365 and 40+ SaaS platforms across multi-site operations</li>
+      </ul>
+    </div>
+    <div class="m-job">
+      <div class="m-jco">New Relic</div>
+      <div class="m-jdate">Dec 2022 – Sept 2024</div>
+      <div class="m-jrole">Senior Systems Engineer (Okta)</div>
+      <ul>
+        <li>Integrated 100+ enterprise apps into Okta SSO — 85%+ centralized auth coverage</li>
+        <li>Automated onboarding/offboarding via Okta Workflows, cutting provisioning time by 60%</li>
+        <li>Implemented Device Trust and conditional access for employees, contractors, and executives</li>
+      </ul>
+    </div>
+    <div class="m-job">
+      <div class="m-jco">Side Inc</div>
+      <div class="m-jdate">Nov 2020 – Dec 2022</div>
+      <div class="m-jrole">IT Systems Administrator</div>
+      <ul>
+        <li>Built automated onboarding/offboarding processes — improved setup time and accuracy</li>
+        <li>Developed identity policies and governance controls across Okta, SCIM, and SaaS apps</li>
+      </ul>
+    </div>
+    <div class="m-job">
+      <div class="m-jco">Pax Labs / Juul Labs</div>
+      <div class="m-jdate">Jul 2017 – Oct 2020</div>
+      <div class="m-jrole">IT Systems Administrator</div>
+      <ul>
+        <li>Automated lifecycle management for 2,000+ employee accounts and hardware</li>
+        <li>Administered AWS and GCP — IAM roles, networking, compute, access controls</li>
+        <li>Delivered KPI and infrastructure reporting to executive leadership</li>
+      </ul>
+    </div>
+    <div class="m-job">
+      <div class="m-jco">Jawbone</div>
+      <div class="m-jdate">Jul 2013 – Jul 2017</div>
+      <div class="m-jrole">IT Desktop Support Specialist</div>
+      <ul>
+        <li>Built and deployed Mac/Windows devices via imaging tools and SCCM</li>
+        <li>Provided Tier 1–3 support; managed Active Directory accounts and permissions</li>
+      </ul>
+    </div>
+    <div class="m-tags" style="margin-top:4px">
+      <span class="m-tag">Okta Certified Professional</span>
+      <span class="m-tag">Okta Certified Administrator</span>
+      <span class="m-tag">CompTIA A+</span>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="m-section" id="m-projects">
+    <div class="m-sec-title">🚀 Projects</div>
+    <div class="m-sec-sub">4 apps built from scratch · No tutorials, no templates</div>
+
+    <div class="m-pcard">
+      <div class="m-ptop">
+        <span style="font-size:28px">🏆</span>
+        <span class="m-plive live">● Live</span>
+      </div>
+      <div class="m-pname">NP Tournaments</div>
+      <div class="m-pdesc">Full tournament management platform for AAU directors — registration, auto-scheduler, brackets, scores, referee assignment, and payment tracking.</div>
+      <div class="m-tags">
+        <span class="m-tag green">React</span><span class="m-tag green">Supabase</span><span class="m-tag green">Node.js</span><span class="m-tag green">Railway</span>
+      </div>
+    </div>
+
+    <div class="m-pcard">
+      <div class="m-ptop">
+        <span style="font-size:28px">📊</span>
+        <span class="m-plive live">● Live</span>
+      </div>
+      <div class="m-pname">NP Rankings</div>
+      <div class="m-pdesc">Custom AAU basketball ranking system with a data pipeline aggregating real game results across multiple circuits. 7,000+ games tracked.</div>
+      <div class="m-tags">
+        <span class="m-tag green">React</span><span class="m-tag green">PostgreSQL</span><span class="m-tag green">Data Pipeline</span>
+      </div>
+    </div>
+
+    <div class="m-pcard">
+      <div class="m-ptop">
+        <img src="flock-logo.png" alt="Flock" style="height:32px;object-fit:contain;border-radius:6px">
+        <span class="m-plive live">● Live</span>
+      </div>
+      <div class="m-pname">Flock</div>
+      <div class="m-pdesc">Private Tesla family tracking app — real-time location, battery, speed, trip history, and seat occupancy across multiple vehicles on one map.</div>
+      <div class="m-tags">
+        <span class="m-tag green">Tesla API</span><span class="m-tag green">Real-time Maps</span><span class="m-tag green">React</span>
+      </div>
+    </div>
+
+    <div class="m-pcard">
+      <div class="m-ptop">
+        <span style="font-size:28px">🎬</span>
+        <span class="m-plive dev">⚙ In Dev</span>
+      </div>
+      <div class="m-pname">Film Room</div>
+      <div class="m-pdesc">Coaching analysis tool for shot tracking, shot charts, and in-game decision breakdowns — data-driven insight built for youth coaches.</div>
+      <div class="m-tags">
+        <span class="m-tag green">React</span><span class="m-tag green">Data Visualization</span><span class="m-tag green">Basketball Analytics</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Coaching -->
+  <section class="m-section" id="m-coaching">
+    <div class="m-sec-title">🏀 Coaching</div>
+    <div class="m-stats">
+      <div class="m-stat a"><span class="m-sn">8–2</span><span class="m-sl">Overall</span></div>
+      <div class="m-stat g"><span class="m-sn">6–0</span><span class="m-sl">League</span></div>
+      <div class="m-stat p"><span class="m-sn">2023</span><span class="m-sl">Founded</span></div>
+    </div>
+    <div class="m-job amber">
+      <div class="m-jco">Freedom High School — Girls Basketball</div>
+      <div class="m-jdate">2025 – 2026</div>
+      <div class="m-jrole amber">Freshman Head Coach / Varsity Assistant</div>
+      <ul>
+        <li>Led Freshman team to 8–2 overall and 6–0 league record — League Champions</li>
+        <li>Implemented "Bingo Card" system for in-game accountability and engagement</li>
+        <li>Supported Varsity program with player development and practice alignment</li>
+      </ul>
+    </div>
+    <div class="m-job amber">
+      <div class="m-jco">Delta Dubs AAU</div>
+      <div class="m-jdate">2023 – Present</div>
+      <div class="m-jrole amber">Founder &amp; Program Director</div>
+      <ul>
+        <li>Founded and operate multi-team AAU program — boys &amp; girls divisions</li>
+        <li>Built internal software to manage teams, tournaments, rankings &amp; film analysis</li>
+        <li>Built community partnerships and managed fundraising initiatives</li>
+      </ul>
+    </div>
+    <div class="m-job amber">
+      <div class="m-jco">Antioch Youth Center — Junior Warriors</div>
+      <div class="m-jdate">2021 – 2023</div>
+      <div class="m-jrole amber">Volunteer Coach</div>
+      <ul>
+        <li>Coached boys &amp; girls ages 7–11 in community youth basketball</li>
+        <li>Focused on fundamentals, teamwork, and building confidence early</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Awards & Certs -->
+  <section class="m-section" id="m-awards">
+    <div class="m-sec-title">🏆 Awards &amp; Certifications</div>
+    <div class="m-shelf">
+      <div class="m-trophy"><span class="m-t-ico">🏅</span><div class="m-t-name">Okta Certified Professional</div><div class="m-t-sub">IAM Certification</div></div>
+      <div class="m-trophy"><span class="m-t-ico">🏅</span><div class="m-t-name">Okta Certified Administrator</div><div class="m-t-sub">Workforce Identity</div></div>
+      <div class="m-trophy"><span class="m-t-ico">🎓</span><div class="m-t-name">CompTIA A+</div><div class="m-t-sub">IT Fundamentals</div></div>
+      <div class="m-trophy"><span class="m-t-ico">🏆</span><div class="m-t-name">League Champions</div><div class="m-t-sub">Freedom HS · 2025–26</div></div>
+      <div class="m-trophy"><span class="m-t-ico">🥇</span><div class="m-t-name">Program Founder</div><div class="m-t-sub">Delta Dubs AAU · 2023</div></div>
+      <div class="m-trophy"><span class="m-t-ico">🛠️</span><div class="m-t-name">Full-Stack Builder</div><div class="m-t-sub">4 Production Apps · Solo</div></div>
+    </div>
+  </section>
+
+  <!-- Photos -->
+  <section class="m-section" id="m-photos">
+    <div class="m-sec-title">📸 Photos</div>
+    <div class="m-photo-grid">
+      <img src="photo4.png" alt="Profile" onclick="openLightbox('photo4.png')">
+      <img src="photo1.jpg" alt="Game Day" onclick="openLightbox('photo1.jpg')">
+      <img src="photo3.jpg" alt="Delta Dubs" onclick="openLightbox('photo3.jpg')">
+      <img src="photo2.jpg" alt="On the Court" onclick="openLightbox('photo2.jpg')">
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="m-section" id="m-contact">
+    <div class="m-sec-title">✉️ Contact</div>
+    <div class="m-sec-sub">Open to new opportunities</div>
+    <a href="mailto:reginald.taylor0114@gmail.com" class="m-citem">
+      <span class="m-cico">✉️</span>
+      <div><span class="m-clbl">Email</span><span class="m-cval">reginald.taylor0114@gmail.com</span></div>
+    </a>
+    <a href="tel:5107593709" class="m-citem">
+      <span class="m-cico">📱</span>
+      <div><span class="m-clbl">Phone</span><span class="m-cval">510-759-3709</span></div>
+    </a>
+    <a href="https://github.com/Coachjay510" target="_blank" class="m-citem">
+      <span class="m-cico">🐙</span>
+      <div><span class="m-clbl">GitHub</span><span class="m-cval">github.com/Coachjay510</span></div>
+    </a>
+    <a href="https://www.linkedin.com/in/reginald-taylor-johnson-b2594274/" target="_blank" class="m-citem">
+      <span class="m-cico">💼</span>
+      <div><span class="m-clbl">LinkedIn</span><span class="m-cval">linkedin.com/in/reginald-taylor-johnson</span></div>
+    </a>
+    <a class="m-citem" style="cursor:default">
+      <span class="m-cico">📍</span>
+      <div><span class="m-clbl">Location</span><span class="m-cval">Antioch, CA — Open to Remote</span></div>
+    </a>
+  </section>
+
+  <div class="m-footer">© 2025 Reginald Taylor-Johnson</div>
 </div>
 
 <script>
