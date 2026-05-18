@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=1000, user-scalable=yes, minimum-scale=0.25, maximum-scale=5">
 <title>Reggie Taylor-Johnson</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -717,16 +717,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
 .di-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.7);display:none}
 .di-dot.on{display:block}
 
-/* ── MOBILE VIEW ─────────────────────────────────── */
-#mobile-view{display:none}
-
-@media(max-width:768px){
-  html,body{height:auto!important;overflow-y:auto!important;overflow-x:hidden!important;background:#0a0a16}
-  #boot,#desktop{display:none!important}
-  #mobile-view{display:block;background:#0a0a16;min-height:100vh}
-  /* sticky modal fix */
-  .smodal-win{width:94vw!important;max-width:94vw!important;transform:rotate(-0.4deg)}
-}
+/* ── MOBILE VIEW — always hidden, desktop shows on all screens ── */
+#mobile-view{display:none!important}
 
 /* ── Mobile Hero ── */
 .m-hero{background:linear-gradient(180deg,#0d0d1a 0%,#1a0d2e 100%);padding:44px 20px 32px;text-align:center;border-bottom:1px solid rgba(99,102,241,.18)}
