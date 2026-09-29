@@ -496,6 +496,11 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
 .wf-tab{padding:10px 20px;font-size:12px;color:#4a5568;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .18s}
 .wf-tab:hover{color:#c0cce0}
 .wf-tab.wf-tab-active{color:#6366f1;border-bottom:2px solid #6366f1;font-weight:700}
+.wf-pause{position:absolute;top:14px;right:16px;z-index:2;padding:5px 12px;font-size:11px;font-weight:700;font-family:inherit;color:#a5b4fc;background:#1a1040;border:1px solid #6366f1;border-radius:14px;cursor:pointer;white-space:nowrap;transition:background .18s,color .18s}
+.wf-pause:hover{background:#6366f1;color:#fff}
+.wf-pause.paused{color:#5cb800;background:#061206;border-color:#5cb800}
+.wf-pause.paused:hover{background:#5cb800;color:#061206}
+#wf-scroll > div > div:first-child{padding-right:96px;min-height:22px}
 /* ── Flow node highlight ────────────────────────── */
 .fnode{transition:filter .25s ease}
 .flit{filter:drop-shadow(0 0 2px #fff) drop-shadow(0 0 8px #fff) drop-shadow(0 0 18px #a5b4fc) drop-shadow(0 0 30px #6366f1)}
@@ -1521,7 +1526,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
   </div>
 
   <!-- ── WORKFLOWS WINDOW ────────────────────────── -->
-  <div class="win" id="win-workflows" style="width:620px;height:640px;top:65px;left:130px">
+  <div class="win" id="win-workflows" style="width:680px;height:660px;top:65px;left:130px">
     <div class="winbar" onmousedown="drag(event,'win-workflows')">
       <div class="tl r" onclick="closeWin('workflows')"></div>
       <div class="tl y" onclick="minWin('workflows')"></div>
@@ -1534,9 +1539,13 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
         <div id="wftab-litmos"  class="wf-tab wf-tab-active" onclick="showWfTab('litmos')">Litmos Access Control</div>
         <div id="wftab-newhire" class="wf-tab" onclick="showWfTab('newhire')">New Hire Onboarding</div>
         <div id="wftab-term"    class="wf-tab" onclick="showWfTab('term')">Termination</div>
+        <div id="wftab-refresh"   class="wf-tab" onclick="showWfTab('refresh')">Laptop Refresh</div>
+        <div id="wftab-lock"      class="wf-tab" onclick="showWfTab('lock')">Device Lock &amp; FileVault</div>
+        <div id="wftab-inventory" class="wf-tab" onclick="showWfTab('inventory')">Inventory Sync</div>
       </div>
       <!-- scrollable chart area -->
-      <div style="overflow-y:auto;flex:1;padding:20px 16px" id="wf-scroll">
+      <div style="overflow-y:auto;flex:1;padding:20px 16px;position:relative" id="wf-scroll">
+        <button id="wf-pause-btn" class="wf-pause" onclick="toggleWfPause()" title="Pause / play the animation">⏸ Pause</button>
         <div id="wf-litmos">
         <div style="font-size:11px;color:#4a5568;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:14px">
           Automated Access Management — Annual Compliance Cycle
@@ -1977,6 +1986,93 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
         </svg>
         </div><!-- end wf-term -->
 
+        <!-- ── LAPTOP REFRESH LIFECYCLE — 6-FLOW OKTA WORKFLOWS SYSTEM TAB (AllTrails) ── -->
+        <div id="wf-refresh" style="display:none">
+        <div style="font-size:11px;color:#4a5568;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:4px">
+          Laptop Refresh Lifecycle — 6-Flow Okta Workflows System
+        </div>
+        <div style="font-size:11px;color:#6366f1;margin-bottom:14px">AllTrails · Jira SM · Okta Tables · Google Sheets + tracking plugin · Gmail · Revivn API · CDW</div>
+        <svg viewBox="0 0 540 778" width="100%" style="display:block;max-width:540px;margin:0 auto;overflow:visible">
+          <defs><marker id="rfaha" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4a5568"/></marker><marker id="rfahg" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5cb800"/></marker><marker id="rfahr" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#e05555"/></marker><marker id="rfahy" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#d4a017"/></marker></defs>
+          <style>.rffl{stroke-dasharray:8 4;animation:dash .85s linear infinite} .rffl-g{stroke-dasharray:8 4;animation:dash .85s linear infinite} .rffl-r{stroke-dasharray:6 4;animation:dash .7s linear infinite} .rffl-y{stroke-dasharray:6 4;animation:dash .7s linear infinite} .rfn0{opacity:0;animation:fadeUp .45s ease forwards 0.1s} .rfn0b{opacity:0;animation:fadeUp .45s ease forwards 0.3s} .rfn1{opacity:0;animation:fadeUp .45s ease forwards 0.5s} .rfn1b{opacity:0;animation:fadeUp .45s ease forwards 0.7s} .rfn2{opacity:0;animation:fadeUp .45s ease forwards 0.9s} .rfn2b{opacity:0;animation:fadeUp .45s ease forwards 1.1s} .rfn3{opacity:0;animation:fadeUp .45s ease forwards 1.3s} .rfn3b{opacity:0;animation:fadeUp .45s ease forwards 1.5s} .rfn4{opacity:0;animation:fadeUp .45s ease forwards 1.7s} .rfn4b{opacity:0;animation:fadeUp .45s ease forwards 1.9s} .rfn5{opacity:0;animation:fadeUp .45s ease forwards 2.1s} .rfn5b{opacity:0;animation:fadeUp .45s ease forwards 2.3s} .rfn6{opacity:0;animation:fadeUp .45s ease forwards 2.5s} .rfn6b{opacity:0;animation:fadeUp .45s ease forwards 2.7s} .rfn7{opacity:0;animation:fadeUp .45s ease forwards 2.9s} .rfn7b{opacity:0;animation:fadeUp .45s ease forwards 3.1s} .rfn8{opacity:0;animation:fadeUp .45s ease forwards 3.3s} .rfn8b{opacity:0;animation:fadeUp .45s ease forwards 3.5s} .rfn9{opacity:0;animation:fadeUp .45s ease forwards 3.7s} .rfn9b{opacity:0;animation:fadeUp .45s ease forwards 3.9s} .rfn10{opacity:0;animation:fadeUp .45s ease forwards 4.1s} .rfn10b{opacity:0;animation:fadeUp .45s ease forwards 4.3s}</style>
+                    <g id="rf0" class="rfn0 fnode"><rect x="150" y="16" width="240" height="44" rx="22" fill="#1a1040" stroke="#6366f1" stroke-width="1.5"/><text x="270" y="36" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#a5b4fc">REFRESH REQUEST</text><text x="270" y="51" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#7c7fc0">Jira Service Management ticket</text></g>
+          <g class="rfn1"><line class="rffl" x1="270" y1="60" x2="270" y2="84" stroke="#4a5568" stroke-width="1.5" marker-end="url(#rfaha)"/></g>
+          <g id="rf1" class="rfn1 fnode"><rect x="134" y="86" width="272" height="58" rx="6" fill="#080c12" stroke="#7c3aed" stroke-width="1.5"/><text x="270" y="107" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#c4b5fd">🔄  Okta Workflow Triggered</text><text x="270" y="123" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#6b4aa0">Reads requester, device &amp; shipping details</text><text x="270" y="136" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#6b4aa0">State tracked per request in an Okta Table</text></g>
+          <g class="rfn2"><line class="rffl" x1="270" y1="144" x2="270" y2="168" stroke="#4a5568" stroke-width="1.5" marker-end="url(#rfaha)"/></g>
+          <g id="rf2" class="rfn2 fnode"><rect x="134" y="170" width="272" height="45" rx="6" fill="#080c12" stroke="#2d4a8a" stroke-width="1.5"/><text x="270" y="191" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#c0cce0">🏷  Address Parsed &amp; Validated</text><text x="270" y="207" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#4a5568">Dynamic parsing — handles any address shape</text></g>
+          <g class="rfn3"><line x1="270" y1="215" x2="270" y2="229" stroke="#4a5568" stroke-width="1.5"/><line x1="135" y1="229" x2="405" y2="229" stroke="#4a5568" stroke-width="2.5"/><line class="rffl" x1="135" y1="229" x2="135" y2="251" stroke="#4a5568" stroke-width="1.5" marker-end="url(#rfaha)"/><line class="rffl" x1="405" y1="229" x2="405" y2="251" stroke="#4a5568" stroke-width="1.5" marker-end="url(#rfaha)"/></g>
+          <g class="rfn3"><rect x="15" y="253" width="240" height="22" rx="11" fill="#0b1020" stroke="#38bdf8" stroke-width="1" stroke-dasharray="3 3"/><text x="135" y="268" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" font-weight="700" letter-spacing="1" fill="#38bdf8">OUTBOUND · NEW LAPTOP · CDW</text><rect x="285" y="253" width="240" height="22" rx="11" fill="#0b1020" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3 3"/><text x="405" y="268" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" font-weight="700" letter-spacing="1" fill="#f59e0b">RETURN · OLD LAPTOP · REVIVN</text></g>
+          <g class="rfn4"><line class="rffl" x1="135" y1="275" x2="135" y2="293" stroke="#4a5568" stroke-width="1.5" marker-end="url(#rfaha)"/><line class="rffl" x1="405" y1="275" x2="405" y2="293" stroke="#4a5568" stroke-width="1.5" marker-end="url(#rfaha)"/></g>
+          <g id="rf3" class="rfn4 fnode"><rect x="15" y="295" width="240" height="42" rx="6" fill="#06101a" stroke="#2b7bb9" stroke-width="1.5"/><text x="135" y="314" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#7dd3fc">🚚  CDW Ships New Laptop</text><text x="135" y="329" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#3a6a9a">Order placed for the employee</text><rect x="285" y="295" width="240" height="42" rx="6" fill="#06101a" stroke="#2b7bb9" stroke-width="1.5"/><text x="405" y="314" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#7dd3fc">📦  Return Box Ordered — Revivn API</text><text x="405" y="329" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#3a6a9a">Box shipped to the employee’s address</text></g>
+          <g class="rfn5"><line class="rffl" x1="135" y1="337" x2="135" y2="355" stroke="#4a5568" stroke-width="1.5" marker-end="url(#rfaha)"/><line class="rffl" x1="405" y1="337" x2="405" y2="355" stroke="#4a5568" stroke-width="1.5" marker-end="url(#rfaha)"/></g>
+          <g id="rf4" class="rfn5 fnode"><rect x="15" y="357" width="240" height="42" rx="6" fill="#0e0b00" stroke="#d4a017" stroke-width="1.5"/><text x="135" y="376" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#fcd34d">🔌  Sheets Plugin Reads Tracking</text><text x="135" y="391" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#8a7040">Carrier tracking auto-posted to the sheet</text><rect x="285" y="357" width="240" height="42" rx="6" fill="#080c12" stroke="#7c3aed" stroke-width="1.5"/><text x="405" y="376" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#c4b5fd">🎫  Ticket Updated — Box Tracking</text><text x="405" y="391" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#6b4aa0">Employee notified via Gmail</text></g>
+          <g class="rfn6"><line class="rffl" x1="135" y1="399" x2="135" y2="417" stroke="#4a5568" stroke-width="1.5" marker-end="url(#rfaha)"/><line class="rffl" x1="405" y1="399" x2="405" y2="417" stroke="#4a5568" stroke-width="1.5" marker-end="url(#rfaha)"/></g>
+          <g id="rf5" class="rfn6 fnode"><rect x="15" y="419" width="240" height="42" rx="6" fill="#080c12" stroke="#7c3aed" stroke-width="1.5"/><text x="135" y="438" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#c4b5fd">🔄  Okta Workflow Reads the Sheet</text><text x="135" y="453" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#6b4aa0">Tracking matched to the refresh ticket</text><rect x="285" y="419" width="240" height="42" rx="6" fill="#06101a" stroke="#2b7bb9" stroke-width="1.5"/><text x="405" y="438" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#7dd3fc">⏱  Revivn API Polled on Schedule</text><text x="405" y="453" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#3a6a9a">Inbound tracking &amp; receipt status</text></g>
+          <g class="rfn7"><line class="rffl" x1="135" y1="461" x2="135" y2="479" stroke="#4a5568" stroke-width="1.5" marker-end="url(#rfaha)"/><line class="rffl" x1="405" y1="461" x2="405" y2="479" stroke="#4a5568" stroke-width="1.5" marker-end="url(#rfaha)"/></g>
+          <g id="rf6" class="rfn7 fnode"><rect x="15" y="481" width="240" height="42" rx="6" fill="#080c12" stroke="#7c3aed" stroke-width="1.5"/><text x="135" y="500" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#c4b5fd">🎫  Ticket Updated — Delivered</text><text x="135" y="515" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#6b4aa0">Shipment status posted to Jira</text><rect x="285" y="481" width="240" height="42" rx="6" fill="#061206" stroke="#5cb800" stroke-width="1.5"/><text x="405" y="500" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#5cb800">📥  Device Received — Ticket Updated</text><text x="405" y="515" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#3a7a3a">Received at Revivn or the SF office</text></g>
+          <g class="rfn7"><line x1="135" y1="523" x2="135" y2="537" stroke="#4a5568" stroke-width="1.5"/><line x1="405" y1="523" x2="405" y2="537" stroke="#4a5568" stroke-width="1.5"/><line x1="135" y1="537" x2="405" y2="537" stroke="#4a5568" stroke-width="2.5"/><text x="270" y="532" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#5cb800">BOTH COMPLETE</text></g>
+          <g class="rfn8"><line class="rffl-g" x1="270" y1="537" x2="270" y2="561" stroke="#5cb800" stroke-width="1.5" marker-end="url(#rfahg)"/></g>
+          <g id="rf7" class="rfn8 fnode"><rect x="134" y="563" width="272" height="45" rx="6" fill="#0e0b00" stroke="#d4a017" stroke-width="1.5"/><text x="270" y="584" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#fcd34d">📊  Logged to Devices Replaced Sheet</text><text x="270" y="600" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#8a7040">Idempotent — &quot;already logged&quot; flag prevents duplicates</text></g>
+          <g class="rfn9"><line class="rffl-g" x1="270" y1="608" x2="270" y2="632" stroke="#5cb800" stroke-width="1.5" marker-end="url(#rfahg)"/></g>
+          <g id="rf8" class="rfn9 fnode"><rect x="150" y="634" width="240" height="44" rx="22" fill="#061206" stroke="#5cb800" stroke-width="1.5"/><text x="270" y="654" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#5cb800">✅  REFRESH COMPLETE</text><text x="270" y="669" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#3a7a3a">New laptop delivered · old device recovered</text></g>
+          <g class="rfn10"><line x1="270" y1="678" x2="270" y2="704" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="2 4"/><rect x="120" y="704" width="300" height="58" rx="8" fill="#0b1020" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="6 4"/><rect x="130" y="696" width="70" height="16" rx="8" fill="#6366f1"/><text x="165" y="707" text-anchor="middle" font-family="Inter,sans-serif" font-size="8.5" font-weight="700" letter-spacing="1" fill="#fff">ROADMAP</text><text x="270" y="725" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#a5b4fc">🧭  Asset Management Platform</text><text x="270" y="741" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#7c7fc0">Tool selection in progress — will replace the</text><text x="270" y="754" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#7c7fc0">tracking spreadsheets as the system of record</text></g>
+        </svg>
+        </div><!-- end wf-refresh -->
+
+        <!-- ── REMOTE DEVICE LOCK & FILEVAULT KEY RETRIEVAL TAB (AllTrails) ── -->
+        <div id="wf-lock" style="display:none">
+        <div style="font-size:11px;color:#4a5568;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:4px">
+          Remote Device Lock &amp; FileVault Key Retrieval
+        </div>
+        <div style="font-size:11px;color:#6366f1;margin-bottom:14px">AllTrails · Okta Workflows · Kandji / Iru MDM · Google Sheets</div>
+        <svg viewBox="0 0 540 616" width="100%" style="display:block;max-width:540px;margin:0 auto;overflow:visible">
+          <defs><marker id="lkaha" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4a5568"/></marker><marker id="lkahg" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5cb800"/></marker><marker id="lkahr" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#e05555"/></marker><marker id="lkahy" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#d4a017"/></marker></defs>
+          <style>.lkfl{stroke-dasharray:8 4;animation:dash .85s linear infinite} .lkfl-g{stroke-dasharray:8 4;animation:dash .85s linear infinite} .lkfl-r{stroke-dasharray:6 4;animation:dash .7s linear infinite} .lkfl-y{stroke-dasharray:6 4;animation:dash .7s linear infinite} .lkn0{opacity:0;animation:fadeUp .45s ease forwards 0.1s} .lkn0b{opacity:0;animation:fadeUp .45s ease forwards 0.3s} .lkn1{opacity:0;animation:fadeUp .45s ease forwards 0.5s} .lkn1b{opacity:0;animation:fadeUp .45s ease forwards 0.7s} .lkn2{opacity:0;animation:fadeUp .45s ease forwards 0.9s} .lkn2b{opacity:0;animation:fadeUp .45s ease forwards 1.1s} .lkn3{opacity:0;animation:fadeUp .45s ease forwards 1.3s} .lkn3b{opacity:0;animation:fadeUp .45s ease forwards 1.5s} .lkn4{opacity:0;animation:fadeUp .45s ease forwards 1.7s} .lkn4b{opacity:0;animation:fadeUp .45s ease forwards 1.9s} .lkn5{opacity:0;animation:fadeUp .45s ease forwards 2.1s} .lkn5b{opacity:0;animation:fadeUp .45s ease forwards 2.3s} .lkn6{opacity:0;animation:fadeUp .45s ease forwards 2.5s} .lkn6b{opacity:0;animation:fadeUp .45s ease forwards 2.7s} .lkn7{opacity:0;animation:fadeUp .45s ease forwards 2.9s} .lkn7b{opacity:0;animation:fadeUp .45s ease forwards 3.1s}</style>
+                    <g id="lk0" class="lkn0 fnode"><rect x="150" y="16" width="240" height="44" rx="22" fill="#120606" stroke="#e05555" stroke-width="1.5"/><text x="270" y="36" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#e05555">SECURITY / OFFBOARDING EVENT</text><text x="270" y="51" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#7a3030">Chained from the &quot;Email to Admin&quot; flow</text></g>
+          <g class="lkn1"><line class="lkfl" x1="270" y1="60" x2="270" y2="84" stroke="#4a5568" stroke-width="1.5" marker-end="url(#lkaha)"/></g>
+          <g id="lk1" class="lkn1 fnode"><rect x="134" y="86" width="272" height="45" rx="6" fill="#06101a" stroke="#2b7bb9" stroke-width="1.5"/><text x="270" y="107" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#7dd3fc">🔍  List User’s Devices — Kandji (Iru)</text><text x="270" y="123" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#3a6a9a">Native Kandji connector · filtered by user email</text></g>
+          <g class="lkn2"><line class="lkfl" x1="270" y1="131" x2="270" y2="155" stroke="#4a5568" stroke-width="1.5" marker-end="url(#lkaha)"/></g>
+          <g id="lk2" class="lkn2 fnode"><polygon class="dpulse" points="270,157 374,195 270,233 166,195" fill="#0e0b00" stroke="#d4a017" stroke-width="1.5"/><text x="270" y="190" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#d4a017">Devices</text><text x="270" y="205" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#d4a017">Found?</text></g>
+          <g class="lkn2b"><path class="lkfl-r" d="M166,195 L114,195" stroke="#e05555" stroke-width="1.5" marker-end="url(#lkahr)" fill="none"/><text x="140" y="187" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#e05555">No</text><rect x="4" y="172" width="108" height="46" rx="6" fill="#120606" stroke="#e05555" stroke-width="1.5"/><text x="58" y="188" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#e05555">No Devices</text><text x="58" y="201" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#7a3030">Logged to audit</text><text x="58" y="213" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#7a3030">sheet for review</text></g>
+          <g class="lkn3"><line class="lkfl-g" x1="270" y1="233" x2="270" y2="257" stroke="#5cb800" stroke-width="1.5" marker-end="url(#lkahg)"/><text x="284" y="249" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#5cb800">Yes</text></g>
+          <g id="lk3" class="lkn3 fnode"><rect x="134" y="259" width="272" height="58" rx="6" fill="#080c12" stroke="#7c3aed" stroke-width="1.5"/><text x="270" y="280" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#c4b5fd">🔁  For Each Device → Helper Flow</text><text x="270" y="296" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#6b4aa0">&quot;Lock Device &amp; Get FileVault Key&quot;</text><text x="270" y="309" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#6b4aa0">Runs once per device the user owns</text></g>
+          <g class="lkn4"><line class="lkfl" x1="270" y1="317" x2="270" y2="341" stroke="#4a5568" stroke-width="1.5" marker-end="url(#lkaha)"/></g>
+          <g id="lk4" class="lkn4 fnode"><rect x="134" y="343" width="272" height="45" rx="6" fill="#06101a" stroke="#2b7bb9" stroke-width="1.5"/><text x="270" y="364" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#7dd3fc">🔑  Retrieve FileVault Recovery Key</text><text x="270" y="380" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#3a6a9a">Escrowed before lock — recovery stays possible</text></g>
+          <g class="lkn5"><line class="lkfl" x1="270" y1="388" x2="270" y2="412" stroke="#4a5568" stroke-width="1.5" marker-end="url(#lkaha)"/></g>
+          <g id="lk5" class="lkn5 fnode"><rect x="134" y="414" width="272" height="45" rx="6" fill="#120606" stroke="#e05555" stroke-width="1.5"/><text x="270" y="435" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#e05555">🔒  Lock Device Remotely</text><text x="270" y="451" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#7a3030">MDM lock command sent via Kandji</text></g>
+          <g class="lkn6"><line class="lkfl" x1="270" y1="459" x2="270" y2="483" stroke="#4a5568" stroke-width="1.5" marker-end="url(#lkaha)"/></g>
+          <g id="lk6" class="lkn6 fnode"><rect x="134" y="485" width="272" height="45" rx="6" fill="#0e0b00" stroke="#d4a017" stroke-width="1.5"/><text x="270" y="506" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#fcd34d">📊  Audit Row Written</text><text x="270" y="522" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#8a7040">User · device · serial · action · timestamp</text></g>
+          <g class="lkn7"><line class="lkfl-g" x1="270" y1="530" x2="270" y2="554" stroke="#5cb800" stroke-width="1.5" marker-end="url(#lkahg)"/></g>
+          <g id="lk7" class="lkn7 fnode"><rect x="150" y="556" width="240" height="44" rx="22" fill="#061206" stroke="#5cb800" stroke-width="1.5"/><text x="270" y="576" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#5cb800">✅  DEVICES SECURED</text><text x="270" y="591" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#3a7a3a">Every device locked · keys retained</text></g>
+        </svg>
+        </div><!-- end wf-lock -->
+
+        <!-- ── MDM DEVICE INVENTORY SYNC — KANDJI → GOOGLE SHEETS TAB (AllTrails) ── -->
+        <div id="wf-inventory" style="display:none">
+        <div style="font-size:11px;color:#4a5568;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:4px">
+          MDM Device Inventory Sync — Kandji → Google Sheets
+        </div>
+        <div style="font-size:11px;color:#6366f1;margin-bottom:14px">AllTrails · Okta Workflows · Kandji / Iru MDM · Google Sheets</div>
+        <svg viewBox="0 0 540 532" width="100%" style="display:block;max-width:540px;margin:0 auto;overflow:visible">
+          <defs><marker id="ivaha" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4a5568"/></marker><marker id="ivahg" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5cb800"/></marker><marker id="ivahr" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#e05555"/></marker><marker id="ivahy" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#d4a017"/></marker></defs>
+          <style>.ivfl{stroke-dasharray:8 4;animation:dash .85s linear infinite} .ivfl-g{stroke-dasharray:8 4;animation:dash .85s linear infinite} .ivfl-r{stroke-dasharray:6 4;animation:dash .7s linear infinite} .ivfl-y{stroke-dasharray:6 4;animation:dash .7s linear infinite} .ivn0{opacity:0;animation:fadeUp .45s ease forwards 0.1s} .ivn0b{opacity:0;animation:fadeUp .45s ease forwards 0.3s} .ivn1{opacity:0;animation:fadeUp .45s ease forwards 0.5s} .ivn1b{opacity:0;animation:fadeUp .45s ease forwards 0.7s} .ivn2{opacity:0;animation:fadeUp .45s ease forwards 0.9s} .ivn2b{opacity:0;animation:fadeUp .45s ease forwards 1.1s} .ivn3{opacity:0;animation:fadeUp .45s ease forwards 1.3s} .ivn3b{opacity:0;animation:fadeUp .45s ease forwards 1.5s} .ivn4{opacity:0;animation:fadeUp .45s ease forwards 1.7s} .ivn4b{opacity:0;animation:fadeUp .45s ease forwards 1.9s} .ivn5{opacity:0;animation:fadeUp .45s ease forwards 2.1s} .ivn5b{opacity:0;animation:fadeUp .45s ease forwards 2.3s} .ivn6{opacity:0;animation:fadeUp .45s ease forwards 2.5s} .ivn6b{opacity:0;animation:fadeUp .45s ease forwards 2.7s}</style>
+                    <g id="iv0" class="ivn0 fnode"><rect x="150" y="16" width="240" height="44" rx="22" fill="#1a1040" stroke="#6366f1" stroke-width="1.5"/><text x="270" y="36" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#a5b4fc">WEEKLY SCHEDULE</text><text x="270" y="51" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#7c7fc0">Okta Workflows scheduled flow</text></g>
+          <g class="ivn1"><line class="ivfl" x1="270" y1="60" x2="270" y2="84" stroke="#4a5568" stroke-width="1.5" marker-end="url(#ivaha)"/></g>
+          <g id="iv1" class="ivn1 fnode"><rect x="134" y="86" width="272" height="45" rx="6" fill="#06101a" stroke="#2b7bb9" stroke-width="1.5"/><text x="270" y="107" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#7dd3fc">💻  Pull Full Device Inventory — Kandji</text><text x="270" y="123" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#3a6a9a">Model · OS · assigned user · last check-in</text></g>
+          <g class="ivn2"><line class="ivfl" x1="270" y1="131" x2="270" y2="155" stroke="#4a5568" stroke-width="1.5" marker-end="url(#ivaha)"/></g>
+          <g id="iv2" class="ivn2 fnode"><rect x="134" y="157" width="272" height="45" rx="6" fill="#080c12" stroke="#7c3aed" stroke-width="1.5"/><text x="270" y="178" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#c4b5fd">🔁  For Each Device</text><text x="270" y="194" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#6b4aa0">Serial Number used as the match key</text></g>
+          <g class="ivn3"><line class="ivfl" x1="270" y1="202" x2="270" y2="226" stroke="#4a5568" stroke-width="1.5" marker-end="url(#ivaha)"/></g>
+          <g id="iv3" class="ivn3 fnode"><polygon class="dpulse" points="270,228 374,266 270,304 166,266" fill="#0e0b00" stroke="#d4a017" stroke-width="1.5"/><text x="270" y="261" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#d4a017">Serial in</text><text x="270" y="276" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#d4a017">Sheet?</text></g>
+          <g class="ivn4"><path class="ivfl" d="M166,266 L135,266 L135,316" stroke="#4a5568" stroke-width="1.5" fill="none" marker-end="url(#ivaha)"/><path class="ivfl" d="M374,266 L405,266 L405,316" stroke="#4a5568" stroke-width="1.5" fill="none" marker-end="url(#ivaha)"/><text x="150" y="258" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#e0a040">No</text><text x="390" y="258" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#5cb800">Yes</text></g>
+          <g id="iv4" class="ivn4 fnode"><rect x="20" y="318" width="230" height="45" rx="6" fill="#0e0b00" stroke="#d4a017" stroke-width="1.5"/><text x="135" y="339" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#fcd34d">➕  Create Row</text><text x="135" y="355" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#8a7040">New device added to inventory</text><rect x="290" y="318" width="230" height="45" rx="6" fill="#0e0b00" stroke="#d4a017" stroke-width="1.5"/><text x="405" y="339" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#fcd34d">✏️  Update Row</text><text x="405" y="355" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#8a7040">Existing record refreshed in place</text></g>
+          <g class="ivn4"><line x1="135" y1="363" x2="135" y2="375" stroke="#4a5568" stroke-width="1.5"/><line x1="405" y1="363" x2="405" y2="375" stroke="#4a5568" stroke-width="1.5"/><line x1="135" y1="375" x2="405" y2="375" stroke="#4a5568" stroke-width="2.5"/></g>
+          <g class="ivn5"><line class="ivfl" x1="270" y1="375" x2="270" y2="399" stroke="#4a5568" stroke-width="1.5" marker-end="url(#ivaha)"/></g>
+          <g id="iv5" class="ivn5 fnode"><rect x="134" y="401" width="272" height="45" rx="6" fill="#120606" stroke="#e05555" stroke-width="1.5"/><text x="270" y="422" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#e05555">🚫  Unenrolled Devices → Inactive</text><text x="270" y="438" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#7a3030">Rows missing from Kandji flagged, never deleted</text></g>
+          <g class="ivn6"><line class="ivfl-g" x1="270" y1="446" x2="270" y2="470" stroke="#5cb800" stroke-width="1.5" marker-end="url(#ivahg)"/></g>
+          <g id="iv6" class="ivn6 fnode"><rect x="150" y="472" width="240" height="44" rx="22" fill="#061206" stroke="#5cb800" stroke-width="1.5"/><text x="270" y="492" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#5cb800">✅  INVENTORY CURRENT</text><text x="270" y="507" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#3a7a3a">Single source of truth for IT &amp; Finance</text></g>
+        </svg>
+        </div><!-- end wf-inventory -->
+
       </div><!-- end wf-scroll -->
     </div>
   </div>
@@ -2380,7 +2476,7 @@ function openWin(id) {
   open.add(id)
   const d = document.getElementById(`dot-${id}`)
   if (d) d.classList.add('on')
-  if (id === 'workflows') startWfFlow('litmos')
+  if (id === 'workflows') { setWfPaused(false); startWfFlow('litmos') }
 }
 function closeWin(id) {
   document.getElementById(`win-${id}`)?.classList.remove('open')
@@ -2699,8 +2795,11 @@ const WF_NODES = {
   litmos:  ['lf0','lf1','lf2','lf3','lf4','lf5','lf6','lf7','lf8','lf9','lf10'],
   newhire: ['nh0','nh1','nh2','nh3','nh4','nh5','nh6','nh7','nh8','nh9','nh10','nh11'],
   term:    ['tf0','tf1','tf2','tf3','tf4','tf5','tf6','tf7'],
+  refresh:   ['rf0','rf1','rf2','rf3','rf4','rf5','rf6','rf7','rf8'],
+  lock:      ['lk0','lk1','lk2','lk3','lk4','lk5','lk6','lk7'],
+  inventory: ['iv0','iv1','iv2','iv3','iv4','iv5','iv6'],
 }
-let _wfTimer = null, _wfCur = 0, _wfName = null
+let _wfTimer = null, _wfCur = 0, _wfName = null, _wfPaused = false
 
 function _wfScrollTo(id) {
   const el = document.getElementById(id)
@@ -2726,6 +2825,7 @@ function startWfFlow(name) {
   _wfCur = 0
   const nodes = WF_NODES[name] || []
   _wfStep(nodes)                          // highlight first node immediately
+  if (_wfPaused) { _wfFreezeAnims(); return }
   _wfTimer = setInterval(() => _wfStep(nodes), 2200)
 }
 
@@ -2737,8 +2837,42 @@ function stopWfFlow() {
   }
 }
 
+// ── Pause / play ─────────────────────────────────
+// Pauses the looping animations (flowing connectors, pulsing diamonds) but
+// lets one-time fade-ins finish so nodes never get stuck invisible.
+function _wfLoopAnims() {
+  const win = document.getElementById('win-workflows')
+  if (!win || !document.getAnimations) return []
+  return document.getAnimations().filter(a =>
+    a.animationName && a.animationName !== 'fadeUp' &&
+    win.contains(a.effect && a.effect.target))
+}
+function _wfFreezeAnims() {
+  // new tab panes start their animations on the next frame
+  requestAnimationFrame(() => { if (_wfPaused) _wfLoopAnims().forEach(a => a.pause()) })
+}
+function setWfPaused(p) {
+  _wfPaused = p
+  const btn = document.getElementById('wf-pause-btn')
+  if (btn) {
+    btn.textContent = p ? '▶ Play' : '⏸ Pause'
+    btn.classList.toggle('paused', p)
+  }
+  if (p) {
+    if (_wfTimer) { clearInterval(_wfTimer); _wfTimer = null }   // keep current node lit
+    _wfFreezeAnims()
+  } else {
+    _wfLoopAnims().forEach(a => a.play())
+    if (_wfName && !_wfTimer) {
+      const nodes = WF_NODES[_wfName] || []
+      _wfTimer = setInterval(() => _wfStep(nodes), 2200)
+    }
+  }
+}
+function toggleWfPause() { setWfPaused(!_wfPaused) }
+
 function showWfTab(name) {
-  ['litmos','newhire','term'].forEach(t => {
+  Object.keys(WF_NODES).forEach(t => {
     document.getElementById(`wftab-${t}`)?.classList.toggle('wf-tab-active', t === name)
     const pane = document.getElementById(`wf-${t}`)
     if (pane) pane.style.display = t === name ? 'block' : 'none'
