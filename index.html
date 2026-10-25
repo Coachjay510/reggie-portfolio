@@ -903,6 +903,19 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       <div class="board-todo-hdr">📋 TODO LIST</div>
       <div class="sticky-grid">
 
+        <div class="snote sg" onclick="showStickyModal('at_solo')">
+          <div class="sn-co">AllTrails</div>
+          <div class="sn-ti">Solo IT for 320 People</div>
+        </div>
+        <div class="snote sb" onclick="showStickyModal('at_workflows')">
+          <div class="sn-co">AllTrails</div>
+          <div class="sn-ti">10+ Okta Workflows</div>
+        </div>
+        <div class="snote sp" onclick="showStickyModal('at_snipeit')">
+          <div class="sn-co">AllTrails</div>
+          <div class="sn-ti">Snipe-IT + WireGuard</div>
+        </div>
+
         <div class="snote sy" onclick="showStickyModal('juul_onboard')">
           <div class="sn-co">Pax / Juul</div>
           <div class="sn-ti">Onboarding &amp; Offboarding System</div>
@@ -1034,7 +1047,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       <h1>Reginald Taylor-Johnson</h1>
       <div class="subtitle">Senior Systems Engineer · Coach · Builder</div>
       <div class="stats">
-        <div class="sbox"><span class="sn">11+</span><span class="sl">Years in IT</span></div>
+        <div class="sbox"><span class="sn">13+</span><span class="sl">Years in IT</span></div>
         <div class="sbox a"><span class="sn">3+</span><span class="sl">Years Coaching</span></div>
         <div class="sbox g"><span class="sn">4</span><span class="sl">Apps Built</span></div>
       </div>
@@ -1073,17 +1086,36 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       <div class="sec">Core Skills</div>
       <div class="tags">
         <span class="tag">Okta · IAM · SSO</span>
+        <span class="tag">Okta Workflows</span>
         <span class="tag">SAML · SCIM · OAuth2 · OIDC</span>
         <span class="tag">Active Directory · Entra ID</span>
         <span class="tag">Microsoft 365</span>
-        <span class="tag">Jamf · Intune · MDM · Device Trust</span>
+        <span class="tag">Iru (Kandji) · Jamf · Intune · MDM · Device Trust</span>
+        <span class="tag">Snipe-IT · WireGuard · UniFi</span>
+        <span class="tag">1Password · Rippling · JumpCloud</span>
         <span class="tag">AWS · GCP</span>
         <span class="tag">Automation & Lifecycle Mgmt</span>
-        <span class="tag">ServiceNow · Zendesk · Atlassian</span>
+        <span class="tag">Jira Service Mgmt · ServiceNow · Zendesk</span>
         <span class="tag">SailPoint · BetterCloud · Workday</span>
         <span class="tag">Network Infrastructure</span>
       </div>
       <div class="sec">Experience</div>
+      <div class="job">
+        <div class="jhead">
+          <span class="jco">AllTrails</span>
+          <span class="jdate">Jun 2026 – Oct 2026</span>
+        </div>
+        <div class="jrole">IT Engineer (Contractor)</div>
+        <ul>
+          <li>Ran IT solo for the first two months, then remained the primary hands-on engineer for ~320 people — <strong>80+ requests and projects</strong> across Okta, macOS, Windows, VPN, and SaaS</li>
+          <li>Enabled Okta SCIM provisioning for 8 apps (Datadog, Dropbox, Ramp, FloQast and more) with role-based push groups; rolled out SSO for Ada, Algolia, and Applause</li>
+          <li>Built <strong>10+ Okta Workflows</strong> automating offboarding and laptop refresh — termination alerts, auto-generated checklists, app-admin notices, device lock with FileVault key escrow</li>
+          <li>Integrated Rippling with Okta to shorten the new-hire pre-start access window without delaying day-one access</li>
+          <li>Took Snipe-IT from vendor evaluation to launch as the asset management system, self-hosted behind a dedicated WireGuard VPN on UniFi</li>
+          <li>Completed the Kandji-to-Iru MDM migration with a test-blueprint process for safe macOS rollouts</li>
+          <li>Provisioned Claude Code, GitHub, AWS, and 1Password for engineering and product; left behind an IT knowledge base and AI handoff assistant</li>
+        </ul>
+      </div>
       <div class="job">
         <div class="jhead">
           <span class="jco">Zelestra</span>
@@ -1349,6 +1381,30 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
           <span>— all shipped</span>
         </div>
         <div class="todo-body">
+
+          <div class="todo-group">AllTrails</div>
+
+          <div class="todo-row">
+            <div class="todo-box">✓</div>
+            <div class="todo-txt">Ran IT solo for two months, then stayed primary hands-on engineer
+              <span class="tbadge">~320 employees</span>
+              <span class="tbadge b">80+ requests &amp; projects</span></div>
+          </div>
+          <div class="todo-row">
+            <div class="todo-box">✓</div>
+            <div class="todo-txt">Built Okta Workflows automating offboarding &amp; laptop refresh
+              <span class="tbadge">10+ workflows</span></div>
+          </div>
+          <div class="todo-row">
+            <div class="todo-box">✓</div>
+            <div class="todo-txt">Enabled Okta SCIM provisioning and SSO rollouts
+              <span class="tbadge">8 SCIM apps</span>
+              <span class="tbadge b">3 new SSO apps</span></div>
+          </div>
+          <div class="todo-row">
+            <div class="todo-box">✓</div>
+            <div class="todo-txt">Launched Snipe-IT asset management behind a dedicated WireGuard VPN; completed Kandji → Iru MDM migration</div>
+          </div>
 
           <div class="todo-group">Pax Labs → Juul Labs</div>
 
@@ -2015,7 +2071,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
           <g id="rf7" class="rfn8 fnode"><rect x="134" y="563" width="272" height="45" rx="6" fill="#0e0b00" stroke="#d4a017" stroke-width="1.5"/><text x="270" y="584" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#fcd34d">📊  Logged to Devices Replaced Sheet</text><text x="270" y="600" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#8a7040">Idempotent — &quot;already logged&quot; flag prevents duplicates</text></g>
           <g class="rfn9"><line class="rffl-g" x1="270" y1="608" x2="270" y2="632" stroke="#5cb800" stroke-width="1.5" marker-end="url(#rfahg)"/></g>
           <g id="rf8" class="rfn9 fnode"><rect x="150" y="634" width="240" height="44" rx="22" fill="#061206" stroke="#5cb800" stroke-width="1.5"/><text x="270" y="654" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#5cb800">✅  REFRESH COMPLETE</text><text x="270" y="669" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#3a7a3a">New laptop delivered · old device recovered</text></g>
-          <g class="rfn10"><line x1="270" y1="678" x2="270" y2="704" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="2 4"/><rect x="120" y="704" width="300" height="58" rx="8" fill="#0b1020" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="6 4"/><rect x="130" y="696" width="70" height="16" rx="8" fill="#6366f1"/><text x="165" y="707" text-anchor="middle" font-family="Inter,sans-serif" font-size="8.5" font-weight="700" letter-spacing="1" fill="#fff">ROADMAP</text><text x="270" y="725" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#a5b4fc">🧭  Asset Management Platform</text><text x="270" y="741" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#7c7fc0">Tool selection in progress — will replace the</text><text x="270" y="754" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#7c7fc0">tracking spreadsheets as the system of record</text></g>
+          <g class="rfn10"><line x1="270" y1="678" x2="270" y2="704" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="2 4"/><rect x="120" y="704" width="300" height="58" rx="8" fill="#0b1020" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="6 4"/><rect x="130" y="696" width="70" height="16" rx="8" fill="#6366f1"/><text x="165" y="707" text-anchor="middle" font-family="Inter,sans-serif" font-size="8.5" font-weight="700" letter-spacing="1" fill="#fff">SHIPPED</text><text x="270" y="725" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#a5b4fc">🗄️  Snipe-IT Asset Management</text><text x="270" y="741" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#7c7fc0">Selected &amp; deployed — self-hosted behind a</text><text x="270" y="754" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#7c7fc0">dedicated WireGuard VPN on UniFi</text></g>
         </svg>
         </div><!-- end wf-refresh -->
 
@@ -2150,7 +2206,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
   <section class="m-section" id="m-about">
     <div class="m-sec-title">👤 About Me</div>
     <div class="m-stats">
-      <div class="m-stat"><span class="m-sn">11+</span><span class="m-sl">Years in IT</span></div>
+      <div class="m-stat"><span class="m-sn">13+</span><span class="m-sl">Years in IT</span></div>
       <div class="m-stat a"><span class="m-sn">3+</span><span class="m-sl">Coaching</span></div>
       <div class="m-stat g"><span class="m-sn">4</span><span class="m-sl">Apps Built</span></div>
     </div>
@@ -2173,6 +2229,18 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
     <div class="m-sec-sub">Tap any note for details</div>
     <div class="m-board">
       <div class="m-sticky-grid">
+        <div class="m-snote sg" onclick="showStickyModal('at_solo')">
+          <div class="m-sn-co">AllTrails</div>
+          <div class="m-sn-ti">Solo IT for 320 People</div>
+        </div>
+        <div class="m-snote sb" onclick="showStickyModal('at_workflows')">
+          <div class="m-sn-co">AllTrails</div>
+          <div class="m-sn-ti">10+ Okta Workflows</div>
+        </div>
+        <div class="m-snote sp" onclick="showStickyModal('at_snipeit')">
+          <div class="m-sn-co">AllTrails</div>
+          <div class="m-sn-ti">Snipe-IT + WireGuard</div>
+        </div>
         <div class="m-snote sy" onclick="showStickyModal('juul_onboard')">
           <div class="m-sn-co">Pax / Juul</div>
           <div class="m-sn-ti">Onboarding &amp; Offboarding System</div>
@@ -2231,12 +2299,25 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
     <div class="m-sec-sub">Senior Systems Engineer · IAM · Cloud</div>
     <div class="m-tags" style="margin-bottom:18px">
       <span class="m-tag">Okta · IAM · SSO</span>
+      <span class="m-tag">Okta Workflows</span>
       <span class="m-tag">SAML · SCIM · OAuth2 · OIDC</span>
       <span class="m-tag">Active Directory · Entra ID</span>
-      <span class="m-tag">Jamf · Intune · MDM · Device Trust</span>
+      <span class="m-tag">Iru (Kandji) · Jamf · Intune · MDM</span>
+      <span class="m-tag">Snipe-IT · WireGuard · UniFi</span>
       <span class="m-tag">AWS · GCP</span>
       <span class="m-tag">Microsoft 365</span>
       <span class="m-tag">ServiceNow · Zendesk</span>
+    </div>
+    <div class="m-job">
+      <div class="m-jco">AllTrails</div>
+      <div class="m-jdate">Jun 2026 – Oct 2026</div>
+      <div class="m-jrole">IT Engineer (Contractor)</div>
+      <ul>
+        <li>Ran IT solo for two months; primary hands-on engineer for ~320 people across 80+ requests and projects</li>
+        <li>Enabled Okta SCIM for 8 apps and SSO for Ada, Algolia, and Applause</li>
+        <li>Built 10+ Okta Workflows automating offboarding and laptop refresh, including device lock with FileVault key escrow</li>
+        <li>Launched Snipe-IT asset management behind a WireGuard VPN; completed the Kandji-to-Iru MDM migration</li>
+      </ul>
     </div>
     <div class="m-job">
       <div class="m-jco">Zelestra</div>
@@ -2436,7 +2517,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
     </a>
   </section>
 
-  <div class="m-footer">© 2025 Reginald Taylor-Johnson</div>
+  <div class="m-footer">© 2026 Reginald Taylor-Johnson</div>
 </div>
 
 <script>
@@ -2516,6 +2597,24 @@ document.addEventListener('mouseup', () => { dragging = null })
 
 // ── Sticky Note Modal Data ────────────────────────
 const STICKY_ITEMS = {
+  at_solo: {
+    ico:'🥾', company:'AllTrails · Jun – Oct 2026',
+    title:'Ran IT Solo for ~320 People',
+    desc:'Joined AllTrails as a contract IT Engineer with the other IT team member out, and ran IT on my own for the first two months until an IT manager joined. Stayed the primary hands-on engineer through 80+ requests and projects — Okta app and role access, MFA resets, 1Password, GitHub, AI tools, VPN, and macOS/Windows support — while shipping automation projects in parallel. Before leaving, wrote an IT knowledge base and AI handoff assistant so support kept running.',
+    metrics:[{n:'~320',l:'Employees'},{n:'80+',l:'Requests & Projects'},{n:'2 mo',l:'Solo IT'}],
+  },
+  at_workflows: {
+    ico:'⚙️', company:'AllTrails · Okta Workflows',
+    title:'Automated Offboarding & Laptop Refresh',
+    desc:'Built 10+ Okta Workflows. Offboarding: Slack termination alerts, an IT checklist auto-generated on every termination ticket, removal notices to admins of non-SCIM apps, and remote device lock with FileVault key escrow. Laptop refresh: a self-serve Jira Service Management request driving six flows that notify the manager, log the device on the vendor order sheet, and alert IT in Slack. Also enabled SCIM provisioning for 8 apps and SSO for 3 more. See the Workflows folder for the diagrams.',
+    metrics:[{n:'10+',l:'Workflows'},{n:'8',l:'SCIM Apps'},{n:'6-Flow',l:'Refresh System'}],
+  },
+  at_snipeit: {
+    ico:'🗄️', company:'AllTrails · Devices',
+    title:'Snipe-IT Asset Management + Iru MDM',
+    desc:'Compared Asset Tiger, Snipe-IT, Oomnitza, and AssetPanda on cost and hosting, then deployed Snipe-IT self-hosted behind a dedicated WireGuard VPN on UniFi — with per-user VPN profiles distributed through 1Password, a one-click connect app, and admin and user setup guides. Also completed the Kandji-to-Iru MDM migration and introduced a test-blueprint process for rolling out macOS policies safely.',
+    metrics:[{n:'4',l:'Tools Evaluated'},{n:'WireGuard',l:'Private Access'},{n:'Iru',l:'MDM Migration'}],
+  },
   juul_onboard: {
     ico:'🔧', company:'Pax Labs → Juul Labs',
     title:'Onboarding & Offboarding System',
